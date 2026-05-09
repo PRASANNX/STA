@@ -20,6 +20,12 @@ export default function Coaches() {
       name: "Kawaljeet Sir",
       role: "Guest Champion Coach",
       bio: "Renowned coach who has produced multiple national and international players. Leads special camps and elite training programs at STA."
+    },
+    {
+      initials: "M",
+      name: "Mukta",
+      role: "Junior Development Coach",
+      bio: "Dedicated to building strong fundamentals in young athletes. Specializes in early childhood motor skills and tennis basics."
     }
   ];
 

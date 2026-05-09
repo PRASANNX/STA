@@ -1,32 +1,35 @@
 "use client";
 
 import { useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function useScrollReveal() {
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.style.opacity = "1";
-            e.target.style.transform = "translateY(0)";
-            // Optional: stop observing once revealed
-            // observer.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+    gsap.registerPlugin(ScrollTrigger);
 
-    // Give the DOM a tiny bit of time to render all items before observing
+    // Give DOM a small tick to render everything
     const timeoutId = setTimeout(() => {
-      const elements = document.querySelectorAll(".reveal-item");
-      elements.forEach((el) => observer.observe(el));
+      const elements = gsap.utils.toArray(".reveal-item");
+
+      elements.forEach((el) => {
+        gsap.to(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%", // Trigger when top of element reaches 85% down viewport
+            once: true,       // Only animate once
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+        });
+      });
     }, 100);
 
     return () => {
       clearTimeout(timeoutId);
-      observer.disconnect();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 }

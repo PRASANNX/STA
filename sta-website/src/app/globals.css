@@ -95,9 +95,8 @@
   pointer-events: none;
 }
 
-/* Scroll Fade-In Initial State */
+/* Scroll Fade-In Initial State (Handled by GSAP) */
 .reveal-item {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
 }
