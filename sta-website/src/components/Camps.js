@@ -1,90 +1,82 @@
 "use client";
 
-import { useScrollReveal } from "../hooks/useScrollReveal";
-import styles from "./Camps.module.css";
-
-const EVENTS = [
-  {
-    title: "Summer Tennis Intensive",
-    date: "June 1 – June 30, 2026",
-    type: "Camp",
-    desc: "4-week intensive program for juniors covering technique, match play, fitness, and mental conditioning.",
-    sport: "Tennis",
-    slots: "Limited to 30 players",
-  },
-  {
-    title: "PWR 200 Tournament",
-    date: "July 15 – 17, 2026",
-    type: "Tournament",
-    desc: "STA's signature annual tournament attracting top talent from across Madhya Pradesh and beyond.",
-    sport: "Tennis",
-    slots: "64 draws",
-  },
-  {
-    title: "League of Champions",
-    date: "August 2026",
-    type: "League",
-    desc: "Season-long competitive league format with rankings, prizes, and the championship trophy.",
-    sport: "All Sports",
-    slots: "Open Registration",
-  },
-  {
-    title: "Pickleball Social Series",
-    date: "Every Saturday",
-    type: "Social",
-    desc: "Weekly social pickleball sessions — perfect for beginners and recreational players of all ages.",
-    sport: "Pickleball",
-    slots: "Drop-in available",
-  },
-];
-
 export default function Camps() {
-  const ref = useScrollReveal();
+  const camps = [
+    {
+      status: "Upcoming",
+      title: "Summer Tennis Camp 2026",
+      desc: "Intensive summer program for juniors aged 7–16. Focus on technique, fitness, and match play. Led by Suryansh Yadav and team.",
+      date: "May–June 2026",
+      age: "Age 7–16"
+    },
+    {
+      status: "Upcoming",
+      title: "Pickleball Bootcamp",
+      desc: "Weekend intensive with Coach Kawaljeet Sir. Open to beginners and intermediates. Limited slots available.",
+      date: "June 2026",
+      age: "All Ages"
+    },
+    {
+      status: "Past Event",
+      title: "PWR 200 Tournament",
+      desc: "Marquee pickleball tournament hosted at STA courts. 200+ participants. Major highlight in the STA legacy.",
+      date: "Concluded"
+    },
+    {
+      status: "Past Event",
+      title: "League of Champions",
+      desc: "Premier inter-club tennis championship. STA players dominated across multiple categories and age groups.",
+      date: "Concluded"
+    }
+  ];
 
   return (
-    <section className={`${styles.camps} section-dark section-padding`} id="camps" ref={ref}>
-      <div className="container">
-        <div className={`${styles.header} reveal`}>
-          <span className="section-label">Camps & Tournaments</span>
-          <h2 className="section-title">
-            Compete, Learn, <span className={styles.titleHL}>Grow</span>
-          </h2>
-          <p className="section-desc">
-            From intensive summer camps to signature tournaments — events that
-            challenge, inspire, and bring the community together.
-          </p>
-        </div>
+    <section id="camps" className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-navy-2 reveal-item">
+      <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+        Camps & Events
+      </div>
+      <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-14 text-white">
+        Train Hard.<br /><span className="text-lime">Play Bigger.</span>
+      </h2>
 
-        <div className={styles.timeline}>
-          {EVENTS.map((event, i) => (
-            <div
-              key={i}
-              className={`${styles.eventCard} reveal`}
-              style={{ transitionDelay: `${i * 0.12}s` }}
-            >
-              <div className={styles.eventLeft}>
-                <span className={styles.eventType}>{event.type}</span>
-                <span className={styles.eventDate}>{event.date}</span>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {camps.map((camp, i) => {
+          const isUpcoming = camp.status === "Upcoming";
+          return (
+            <div key={i} className="bg-card border border-[rgba(200,232,53,0.15)] rounded-2xl p-8 relative transition-transform hover:-translate-y-1 hover:border-[rgba(200,232,53,0.4)]">
+              <div className={`inline-block px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[1.5px] uppercase mb-5 ${
+                isUpcoming 
+                  ? "bg-[rgba(57,211,83,0.1)] text-green-bright border border-[rgba(57,211,83,0.25)]" 
+                  : "bg-[rgba(136,146,164,0.1)] text-muted border border-[rgba(200,232,53,0.15)]"
+              }`}>
+                {camp.status}
               </div>
-              <div className={styles.eventDivider}>
-                <div className={styles.eventDot} />
-                <div className={styles.eventLine} />
-              </div>
-              <div className={styles.eventRight}>
-                <div className={styles.eventMeta}>
-                  <span className={styles.sportTag}>{event.sport}</span>
-                  <span className={styles.slotsTag}>{event.slots}</span>
+              <h3 className="font-heading text-[30px] tracking-[1px] text-white mb-2.5">{camp.title}</h3>
+              <p className="text-muted text-[13px] leading-[1.6] mb-5">
+                {camp.desc}
+              </p>
+              
+              <div className="flex flex-wrap gap-4 mb-6">
+                <div className="flex items-center gap-1.5 text-[12px] text-muted">
+                  <svg className="w-3.5 h-3.5 stroke-lime fill-none stroke-2" viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/></svg>
+                  {camp.date}
                 </div>
-                <h3 className={styles.eventTitle}>{event.title}</h3>
-                <p className={styles.eventDesc}>{event.desc}</p>
-                <a href="#join" className={styles.eventCta}>
-                  Register Interest
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
+                {camp.age && (
+                  <div className="flex items-center gap-1.5 text-[12px] text-muted">
+                    <svg className="w-3.5 h-3.5 stroke-lime fill-none stroke-2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                    {camp.age}
+                  </div>
+                )}
               </div>
+
+              <button className={`bg-transparent border-[1.5px] border-[rgba(200,232,53,0.15)] text-white px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all ${
+                isUpcoming ? "cursor-pointer hover:bg-lime hover:border-lime hover:text-navy" : "opacity-50 cursor-default"
+              }`}>
+                {isUpcoming ? "Register Now →" : "View Highlights"}
+              </button>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
     </section>
   );

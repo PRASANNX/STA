@@ -1,147 +1,90 @@
 "use client";
 
 import { useState } from "react";
-import { useScrollReveal } from "../hooks/useScrollReveal";
-import styles from "./Programs.module.css";
 
-const PROGRAMS = [
-  {
-    id: 1, sport: "Tennis", category: "Kids",
-    title: "Junior Tennis Foundations",
-    age: "5–12 years",
-    level: "Beginner to Intermediate",
-    timing: "6:00 – 8:00 AM",
-    desc: "Build fundamentals with fun drills, mini-court games, and age-appropriate technique training.",
-    icon: "🎾", color: "#2D6A4F",
-  },
-  {
-    id: 2, sport: "Tennis", category: "Teens",
-    title: "Competitive Tennis Program",
-    age: "13–17 years",
-    level: "Intermediate to Advanced",
-    timing: "6:00 – 10:00 AM",
-    desc: "Tournament preparation, match strategy, physical conditioning, and mental toughness training.",
-    icon: "🏆", color: "#1A5C3A",
-  },
-  {
-    id: 3, sport: "Tennis", category: "Adults",
-    title: "Adult Tennis Training",
-    age: "18+ years",
-    level: "All Levels",
-    timing: "4:00 – 10:00 PM",
-    desc: "Fitness-focused sessions, social play, and structured skill development for working professionals.",
-    icon: "💪", color: "#40916C",
-  },
-  {
-    id: 4, sport: "Pickleball", category: "All",
-    title: "Pickleball Academy",
-    age: "All Ages",
-    level: "Beginner to Advanced",
-    timing: "4:00 – 10:00 PM",
-    desc: "India's fastest-growing sport — learn dinks, drives, and strategy on professional courts.",
-    icon: "🥒", color: "#C7F93E",
-  },
-  {
-    id: 5, sport: "Table Tennis", category: "All",
-    title: "Table Tennis Training",
-    age: "All Ages",
-    level: "All Levels",
-    timing: "6:00 – 10:00 PM",
-    desc: "Indoor training facility with professional tables, coaching, and competitive practice sessions.",
-    icon: "🏓", color: "#FF6B35",
-  },
-  {
-    id: 6, sport: "Tennis", category: "Kids",
-    title: "Weekend Tennis Camp",
-    age: "6–15 years",
-    level: "All Levels",
-    timing: "Sat–Sun 7:00 AM",
-    desc: "Intensive weekend sessions perfect for school-going kids. Fun, fitness, and fundamentals.",
-    icon: "⭐", color: "#2D6A4F",
-  },
+const allPrograms = [
+  { id: 1, sport: "tennis", sportName: "🎾 Tennis", title: "Junior Starter", age: "Kids · Age 5–12 · Beginner", price: "₹2,500" },
+  { id: 2, sport: "tennis", sportName: "🎾 Tennis", title: "Performance Track", age: "Teens · Age 13–17 · Intermediate", price: "₹3,500" },
+  { id: 3, sport: "tennis", sportName: "🎾 Tennis", title: "Adult Coaching", age: "Adults · Age 18+ · All Levels", price: "₹3,000" },
+  { id: 4, sport: "pickleball", sportName: "Pickleball", title: "Intro to Pickleball", age: "All Ages · Beginner", price: "₹2,500" },
+  { id: 5, sport: "pickleball", sportName: "Pickleball", title: "Pickleball Advanced", age: "All Ages · Competitive", price: "₹3,000" },
+  { id: 6, sport: "tt", sportName: "🏓 Table Tennis", title: "TT Standard", age: "All Ages · All Levels", price: "₹2,000" }
 ];
 
-const FILTERS = ["All", "Tennis", "Pickleball", "Table Tennis"];
-
 export default function Programs() {
-  const ref = useScrollReveal();
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [filter, setFilter] = useState("all");
 
-  const filtered = activeFilter === "All"
-    ? PROGRAMS
-    : PROGRAMS.filter((p) => p.sport === activeFilter);
+  const filteredPrograms = allPrograms.filter((p) => {
+    if (filter === "all") return true;
+    if (filter === "kids") return p.age.includes("Kids");
+    if (filter === "teens") return p.age.includes("Teens");
+    if (filter === "adults") return p.age.includes("Adults");
+    return p.sport === filter;
+  });
 
   return (
-    <section className={`${styles.programs} section-dark section-padding`} id="programs" ref={ref}>
-      <div className="container">
-        <div className={`${styles.header} reveal`}>
-          <span className="section-label">Programs & Training</span>
-          <h2 className="section-title">
-            Train Like a <span className={styles.titleHL}>Champion</span>
-          </h2>
-          <p className="section-desc">
-            From first-time players to tournament competitors — structured programs
-            for every age, skill level, and sport.
-          </p>
-        </div>
+    <section id="programs" className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-navy-2 reveal-item">
+      <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+        Training Programs
+      </div>
+      <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-4 text-white">
+        Find Your<br />
+        <span className="text-lime">Program</span>
+      </h2>
+      <p className="text-muted text-[15px] leading-[1.7] max-w-[500px] mb-8">
+        Open every day for coaching. Court bookings available Tuesday–Sunday.
+      </p>
 
-        {/* Filters */}
-        <div className={`${styles.filters} reveal reveal-delay-1`}>
-          {FILTERS.map((f) => (
-            <button
-              key={f}
-              className={`${styles.filterBtn} ${activeFilter === f ? styles.filterActive : ""}`}
-              onClick={() => setActiveFilter(f)}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
+      {/* Toggles */}
+      <div className="flex flex-wrap gap-3 mb-12">
+        {[
+          { id: "all", label: "All Programs" },
+          { id: "tennis", label: "🎾 Tennis" },
+          { id: "pickleball", label: "Pickleball" },
+          { id: "tt", label: "🏓 Table Tennis" },
+          { id: "kids", label: "Kids (5–12)" },
+          { id: "teens", label: "Teens (13–17)" },
+          { id: "adults", label: "Adults (18+)" }
+        ].map((btn) => (
+          <button
+            key={btn.id}
+            onClick={() => setFilter(btn.id)}
+            className={`px-5 py-2 rounded-full text-[13px] font-semibold transition-all cursor-pointer border ${
+              filter === btn.id
+                ? "bg-lime text-navy border-lime shadow-[0_0_15px_rgba(200,232,53,0.3)]"
+                : "bg-transparent text-muted border-[rgba(200,232,53,0.3)] hover:border-lime hover:text-white"
+            }`}
+          >
+            {btn.label}
+          </button>
+        ))}
+      </div>
 
-        {/* Info Banner */}
-        <div className={`${styles.infoBanner} reveal reveal-delay-2`}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
-          </svg>
-          Coaching available every day — Court booking closed on Mondays
-        </div>
-
-        {/* Cards Grid */}
-        <div className={styles.grid}>
-          {filtered.map((program, i) => (
-            <div
-              key={program.id}
-              className={`${styles.card} reveal`}
-              style={{ transitionDelay: `${i * 0.1}s` }}
-            >
-              <div className={styles.cardHeader}>
-                <span className={styles.cardIcon}>{program.icon}</span>
-                <div className={styles.cardBadges}>
-                  <span className={styles.sportBadge} style={{ background: program.color, color: program.color === "#C7F93E" ? "#1a2a44" : "#fff" }}>
-                    {program.sport}
-                  </span>
-                  <span className={styles.ageBadge}>{program.age}</span>
-                </div>
+      {/* Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredPrograms.map((p) => (
+          <div key={p.id} className="bg-card border border-[rgba(200,232,53,0.15)] rounded-2xl flex flex-col justify-between transition-transform hover:-translate-y-1 hover:border-[rgba(200,232,53,0.4)]">
+            <div className="p-7 pb-6 border-b border-[rgba(200,232,53,0.1)]">
+              <div className="inline-flex items-center gap-1.5 bg-navy border border-[rgba(200,232,53,0.2)] px-3 py-1 rounded text-[11px] font-semibold uppercase tracking-[1px] text-white mb-5">
+                {p.sportName}
               </div>
-              <h3 className={styles.cardTitle}>{program.title}</h3>
-              <p className={styles.cardDesc}>{program.desc}</p>
-              <div className={styles.cardMeta}>
-                <div className={styles.metaItem}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                  {program.timing}
-                </div>
-                <div className={styles.metaItem}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-                  {program.level}
-                </div>
+              <h3 className="font-heading text-[28px] tracking-[1px] text-white mb-2">{p.title}</h3>
+              <p className="text-lime text-[13px] font-medium mb-5">{p.age}</p>
+              <div className="flex items-center gap-2 text-[12px] text-muted">
+                <div className="w-1.5 h-1.5 rounded-full bg-[rgba(200,232,53,0.5)]"></div>
+                6:00–10:00 AM &nbsp;|&nbsp; 4:00–10:00 PM
               </div>
-              <a href="#join" className={styles.cardCta}>
-                Enroll Now
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div className="p-6 pt-5 flex items-center justify-between">
+              <div className="text-[13px] text-muted">
+                From <strong className="text-white text-[16px]">{p.price}/mo</strong>
+              </div>
+              <a href="#cta" className="text-lime text-[13px] font-semibold tracking-[1px] uppercase no-underline hover:underline">
+                Enroll →
               </a>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   );

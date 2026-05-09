@@ -1,91 +1,58 @@
 "use client";
 
-import { useState } from "react";
-import { useScrollReveal } from "../hooks/useScrollReveal";
-import styles from "./Testimonials.module.css";
-
-const TESTIMONIALS = [
-  {
-    name: "Priya Sharma",
-    role: "Parent of Junior Player",
-    text: "My son joined STA at age 8 and within two years, he was competing at state level. Suryansh Sir doesn't just coach tennis — he builds character. The STA Family is our second home.",
-    rating: 5,
-  },
-  {
-    name: "Rajesh Gupta",
-    role: "Adult Player",
-    text: "I picked up tennis at 35 and never thought I could improve this much. The evening adult sessions are perfectly structured — great fitness, great fun, and wonderful people.",
-    rating: 5,
-  },
-  {
-    name: "Meera Joshi",
-    role: "Pickleball Enthusiast",
-    text: "The pickleball program at STA is fantastic! Professional courts, expert coaching, and a vibrant community. Best decision I made for my health and social life.",
-    rating: 5,
-  },
-  {
-    name: "Arjun Patel",
-    role: "Tournament Player, Age 16",
-    text: "Training under Kawaljeet Sir was a game changer. His experience at the national level translates directly into the court — I've won 3 state tournaments this year!",
-    rating: 5,
-  },
-];
-
 export default function Testimonials() {
-  const ref = useScrollReveal();
-  const [active, setActive] = useState(0);
+  const reviews = [
+    {
+      text: "\"My son joined STA at age 7 and in just 2 years he's competing at district level. Suryansh sir's coaching is exceptional.\"",
+      initials: "RP",
+      name: "Rajesh Patel",
+      role: "Parent of Junior Player"
+    },
+    {
+      text: "\"Best academy in Indore. The facilities are great, the coaches are professional, and the STA community feels like family.\"",
+      initials: "AS",
+      name: "Anita Sharma",
+      role: "Adult Member"
+    },
+    {
+      text: "\"Started pickleball at 45 and never felt out of place. The coaches are patient and encouraging. Highly recommend!\"",
+      initials: "VG",
+      name: "Vijay Gupta",
+      role: "Pickleball Member"
+    }
+  ];
 
   return (
-    <section className={`${styles.testimonials} section-light section-padding`} id="testimonials" ref={ref}>
-      <div className="container">
-        <div className={`${styles.header} reveal`}>
-          <span className="section-label">Testimonials</span>
-          <h2 className="section-title">
-            Voices of the <span className={styles.titleHL}>STA Family</span>
-          </h2>
-        </div>
+    <section className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-navy reveal-item">
+      <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+        Reviews
+      </div>
+      <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-14 text-white">
+        The STA<br /><span className="text-lime">Family Speaks</span>
+      </h2>
 
-        <div className={styles.carousel}>
-          <div className={`${styles.quoteCard} reveal reveal-delay-1`}>
-            <div className={styles.quoteIcon}>"</div>
-            <p className={styles.quoteText}>{TESTIMONIALS[active].text}</p>
-            <div className={styles.quoteAuthor}>
-              <div className={styles.authorAvatar}>
-                {TESTIMONIALS[active].name.charAt(0)}
-              </div>
-              <div>
-                <span className={styles.authorName}>{TESTIMONIALS[active].name}</span>
-                <span className={styles.authorRole}>{TESTIMONIALS[active].role}</span>
-              </div>
-            </div>
-            <div className={styles.stars}>
-              {Array.from({ length: TESTIMONIALS[active].rating }).map((_, i) => (
-                <span key={i} className={styles.star}>★</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {reviews.map((r, i) => (
+          <div key={i} className="bg-card border border-[rgba(200,232,53,0.15)] rounded-2xl p-7 transition-transform hover:-translate-y-1">
+            <div className="flex gap-1 mb-4">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <span key={s} className="text-lime text-[14px]">★</span>
               ))}
             </div>
+            <blockquote className="text-white text-[14px] leading-[1.7] mb-5 font-style-italic italic opacity-90">
+              {r.text}
+            </blockquote>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-[rgba(200,232,53,0.15)] border border-[rgba(200,232,53,0.3)] flex items-center justify-center shrink-0 font-heading text-[16px] text-lime">
+                {r.initials}
+              </div>
+              <div>
+                <div className="text-[13px] font-semibold text-white">{r.name}</div>
+                <div className="text-[11px] text-muted">{r.role}</div>
+              </div>
+            </div>
           </div>
-
-          <div className={styles.dots}>
-            {TESTIMONIALS.map((_, i) => (
-              <button
-                key={i}
-                className={`${styles.dot} ${i === active ? styles.dotActive : ""}`}
-                onClick={() => setActive(i)}
-                aria-label={`Testimonial ${i + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Review Sources */}
-        <div className={`${styles.sources} reveal reveal-delay-2`}>
-          <span className={styles.sourceLabel}>Trusted on</span>
-          <div className={styles.sourceLogos}>
-            <span className={styles.sourceBadge}>⭐ JustDial 4.8</span>
-            <span className={styles.sourceBadge}>⭐ Google 4.7</span>
-            <span className={styles.sourceBadge}>⭐ BookMyPlayer</span>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );

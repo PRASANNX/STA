@@ -1,83 +1,61 @@
 "use client";
 
-import { useScrollReveal } from "../hooks/useScrollReveal";
-import styles from "./Coaches.module.css";
-
-const COACHES = [
-  {
-    name: "Suryansh Yadav",
-    role: "Director & Head Coach",
-    badge: "Founder",
-    bio: "Visionary leader who built STA from the ground up over 10+ years. His dedication to producing champions and fostering the STA Family is the heartbeat of the academy.",
-    color: "#C7F93E",
-    emoji: "👑",
-  },
-  {
-    name: "Suryan Shadav",
-    role: "Performance Coach",
-    badge: "International Style",
-    bio: "Brings an international approach to performance coaching. Specializes in advanced technique refinement, physical conditioning, and competitive match preparation.",
-    color: "#40916C",
-    emoji: "🎯",
-  },
-  {
-    name: "Kawaljeet Sir",
-    role: "Guest Champion Coach",
-    badge: "National Player Producer",
-    bio: "A celebrated name in Indian tennis coaching. Known for producing national and international level players. His guest sessions at STA are highly sought after.",
-    color: "#FF6B35",
-    emoji: "🏆",
-  },
-];
-
 export default function Coaches() {
-  const ref = useScrollReveal();
+  const coaches = [
+    {
+      initials: "SY",
+      name: "Suryansh Yadav",
+      role: "Founder & Head Coach",
+      badge: "Director",
+      bio: "Visionary founder of STA with 10+ years developing junior and adult players. Director of Surya Pickleball Academy. Trains players from grassroots to competitive levels."
+    },
+    {
+      initials: "SS",
+      name: "Suryan Shadav",
+      role: "Performance Coach",
+      bio: "International-style coach handling beginners, intermediates, and advanced players. Focused on performance-track development."
+    },
+    {
+      initials: "KS",
+      name: "Kawaljeet Sir",
+      role: "Guest Champion Coach",
+      bio: "Renowned coach who has produced multiple national and international players. Leads special camps and elite training programs at STA."
+    }
+  ];
 
   return (
-    <section className={`${styles.coaches} section-light section-padding`} id="coaches" ref={ref}>
-      <div className="container">
-        <div className={`${styles.header} reveal`}>
-          <span className="section-label">Meet Our Coaches</span>
-          <h2 className="section-title">
-            Guided by the <span className={styles.titleHL}>Best</span>
-          </h2>
-          <p className="section-desc">
-            World-class coaching from passionate mentors who have dedicated their
-            lives to building champions on and off the court.
-          </p>
-        </div>
-
-        <div className={styles.grid}>
-          {COACHES.map((coach, i) => (
-            <div
-              key={coach.name}
-              className={`${styles.card} reveal`}
-              style={{ transitionDelay: `${i * 0.15}s` }}
-            >
-              <div className={styles.cardImage}>
-                <div className={styles.imagePlaceholder} style={{
-                  background: `linear-gradient(135deg, ${coach.color}20, ${coach.color}40)`,
-                  borderColor: `${coach.color}30`,
-                }}>
-                  <span className={styles.coachEmoji}>{coach.emoji}</span>
-                </div>
-                <span className={styles.badge} style={{ background: coach.color, color: coach.color === "#C7F93E" ? "#1a2a44" : "#fff" }}>
-                  {coach.badge}
-                </span>
-              </div>
-              <div className={styles.cardBody}>
-                <h3 className={styles.coachName}>{coach.name}</h3>
-                <span className={styles.coachRole}>{coach.role}</span>
-                <p className={styles.coachBio}>{coach.bio}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className={`${styles.supporting} reveal reveal-delay-3`}>
-          <p>+ Team of dedicated junior and adult development coaches</p>
-        </div>
+    <section id="coaches" className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-navy-2 reveal-item">
+      <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+        Meet The Team
       </div>
+      <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-12 text-white">
+        The Coaches<br />Behind Your<br /><span className="text-lime">Game</span>
+      </h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {coaches.map((c, i) => (
+          <div key={i} className="bg-card border border-[rgba(200,232,53,0.15)] rounded-2xl p-7 relative transition-transform hover:-translate-y-1 hover:border-[rgba(200,232,53,0.4)]">
+            {c.badge && (
+              <span className="absolute top-6 right-6 bg-lime text-navy px-3 py-1 rounded text-[10px] font-bold tracking-[1.5px] uppercase">
+                {c.badge}
+              </span>
+            )}
+            <div className="w-16 h-16 rounded-full bg-navy border border-[rgba(200,232,53,0.3)] flex items-center justify-center font-heading text-[24px] text-lime mb-6 shadow-[0_0_15px_rgba(200,232,53,0.1)]">
+              {c.initials}
+            </div>
+            <div>
+              <div className="text-[12px] font-semibold text-lime uppercase tracking-[1px] mb-1">{c.role}</div>
+              <div className="font-heading text-[28px] tracking-[1px] text-white mb-3">{c.name}</div>
+              <p className="text-muted text-[13px] leading-[1.6]">
+                {c.bio}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="text-muted text-[13px] mt-8 text-center">
+        + A team of dedicated junior and adult development coaches.
+      </p>
     </section>
   );
 }

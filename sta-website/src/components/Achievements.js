@@ -1,100 +1,59 @@
 "use client";
 
-import { useScrollReveal } from "../hooks/useScrollReveal";
-import { useEffect, useRef, useState } from "react";
-import styles from "./Achievements.module.css";
-
-const STATS = [
-  { num: 10, suffix: "+", label: "Years of Excellence", icon: "🏛️" },
-  { num: 500, suffix: "+", label: "Players Trained", icon: "👥" },
-  { num: 50, suffix: "+", label: "Tournament Wins", icon: "🏆" },
-  { num: 3, suffix: "", label: "Sports Disciplines", icon: "🎾" },
-  { num: 15, suffix: "+", label: "National Players Produced", icon: "🇮🇳" },
-  { num: 6, suffix: "", label: "Days a Week Training", icon: "📅" },
-];
-
-function AnimatedCounter({ target, suffix }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const started = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          const duration = 1500;
-          const start = performance.now();
-          const animate = (now) => {
-            const elapsed = now - start;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.floor(eased * target));
-            if (progress < 1) requestAnimationFrame(animate);
-          };
-          requestAnimationFrame(animate);
-        }
-      },
-      { threshold: 0.5 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target]);
-
-  return (
-    <span ref={ref} className={styles.statNum}>
-      {count}{suffix}
-    </span>
-  );
-}
-
 export default function Achievements() {
-  const ref = useScrollReveal();
+  const achievements = [
+    {
+      num: "10+",
+      title: "Years of Excellence",
+      desc: "A decade-long journey of turning raw talent into competitive champions."
+    },
+    {
+      num: "PWR",
+      title: "PWR 200 Tournament",
+      desc: "Hosted marquee pickleball tournaments putting Indore on the national map."
+    },
+    {
+      num: "LOC",
+      title: "League of Champions",
+      desc: "Premier tennis event organized and championed by STA players and directors."
+    },
+    {
+      num: "3×",
+      title: "Sports Mastery",
+      desc: "Expanded from Tennis to Pickleball and Table Tennis with dedicated coaching."
+    }
+  ];
 
   return (
-    <section className={`${styles.achievements} section-dark section-padding`} id="achievements" ref={ref}>
-      {/* Background accent */}
-      <div className={styles.bgAccent} />
+    <section id="achievements" className="py-[72px] lg:py-[120px] px-6 lg:px-12 relative overflow-hidden reveal-item">
+      {/* Background decoration matching prototype style */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(200,232,53,0.05)_0%,transparent_70%)] pointer-events-none -z-10 translate-x-1/3 -translate-y-1/3"></div>
 
-      <div className="container">
-        <div className={`${styles.header} reveal`}>
-          <span className="section-label">Achievements & Legacy</span>
-          <h2 className="section-title">
-            Numbers That Speak <span className={styles.titleHL}>Volumes</span>
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-24 items-center">
+        <div>
+          <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+            Legacy
+          </div>
+          <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-4 text-white">
+            10 Years.<br />Countless<br /><span className="text-lime">Champions</span>
           </h2>
-          <p className="section-desc">
-            A decade of consistent excellence, measured in champions produced,
-            trophies won, and lives transformed through sport.
+          <p className="text-muted text-[15px] leading-[1.7] max-w-[400px]">
+            From state-level titles to international courts — STA players compete at every level.
           </p>
         </div>
 
-        <div className={styles.grid}>
-          {STATS.map((stat, i) => (
-            <div
-              key={stat.label}
-              className={`${styles.statCard} reveal`}
-              style={{ transitionDelay: `${i * 0.1}s` }}
-            >
-              <span className={styles.statIcon}>{stat.icon}</span>
-              <AnimatedCounter target={stat.num} suffix={stat.suffix} />
-              <span className={styles.statLabel}>{stat.label}</span>
+        <div className="flex flex-col gap-8">
+          {achievements.map((item, i) => (
+            <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 p-6 rounded-2xl bg-card border border-[rgba(200,232,53,0.1)] transition-transform hover:-translate-x-2 hover:border-lime">
+              <div className="font-heading text-[48px] text-lime leading-none w-24 shrink-0">
+                {item.num}
+              </div>
+              <div>
+                <h4 className="font-heading text-[24px] tracking-[1px] text-white mb-2">{item.title}</h4>
+                <p className="text-muted text-[13px] leading-[1.6] m-0">{item.desc}</p>
+              </div>
             </div>
           ))}
-        </div>
-
-        {/* Video CTA */}
-        <div className={`${styles.videoCta} reveal reveal-delay-3`}>
-          <div className={styles.videoBox}>
-            <div className={styles.playBtn}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--color-navy)">
-                <polygon points="5,3 19,12 5,21" />
-              </svg>
-            </div>
-            <div>
-              <h4 className={styles.videoTitle}>Watch: 10 Years of STA</h4>
-              <p className={styles.videoDesc}>The journey of building champions in Indore</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>

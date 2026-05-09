@@ -1,67 +1,51 @@
 "use client";
 
-import { useScrollReveal } from "../hooks/useScrollReveal";
-import styles from "./Gallery.module.css";
-
-const GALLERY_ITEMS = [
-  { title: "Golden Hour Training", tag: "Training", aspect: "tall", emoji: "🌅" },
-  { title: "Junior Championship Rally", tag: "Tournament", aspect: "wide", emoji: "🏆" },
-  { title: "Pickleball Dink Clinic", tag: "Pickleball", aspect: "square", emoji: "🥒" },
-  { title: "Summer Camp 2025", tag: "Camp", aspect: "tall", emoji: "☀️" },
-  { title: "Trophy Celebration", tag: "Achievement", aspect: "square", emoji: "🎉" },
-  { title: "Coach & Student Moment", tag: "Community", aspect: "wide", emoji: "🤝" },
-  { title: "STA Family Day", tag: "Community", aspect: "square", emoji: "👨‍👩‍👧‍👦" },
-  { title: "Court Side Action", tag: "Training", aspect: "tall", emoji: "🎾" },
-];
+import Link from "next/link";
 
 export default function Gallery() {
-  const ref = useScrollReveal();
-
   return (
-    <section className={`${styles.gallery} section-light section-padding`} id="gallery" ref={ref}>
-      <div className="container">
-        <div className={`${styles.header} reveal`}>
-          <span className="section-label">Gallery & Moments</span>
-          <h2 className="section-title">
-            Life at <span className={styles.titleHL}>STA</span>
+    <section id="gallery" className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-navy-2 reveal-item">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+        <div>
+          <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+            Life At STA
+          </div>
+          <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] m-0 text-white">
+            Action <span className="text-lime">&</span> Energy
           </h2>
-          <p className="section-desc">
-            From intense training sessions to joyful celebrations — capturing the
-            spirit of the STA Family.
-          </p>
         </div>
+        <Link 
+          href="https://instagram.com" 
+          target="_blank"
+          className="bg-transparent text-white border-[1.5px] border-[rgba(200,232,53,0.3)] px-6 py-2.5 rounded-full text-[13px] font-semibold tracking-[1px] uppercase transition-all hover:bg-lime hover:border-lime hover:text-navy inline-flex items-center justify-center whitespace-nowrap self-start lg:self-auto"
+        >
+          Follow @STA.Indore
+        </Link>
+      </div>
 
-        <div className={styles.masonry}>
-          {GALLERY_ITEMS.map((item, i) => (
-            <div
-              key={i}
-              className={`${styles.item} ${styles[item.aspect]} reveal`}
-              style={{ transitionDelay: `${i * 0.08}s` }}
-            >
-              <div className={styles.itemInner}>
-                <span className={styles.itemEmoji}>{item.emoji}</span>
-                <div className={styles.itemOverlay}>
-                  <span className={styles.itemTag}>{item.tag}</span>
-                  <h4 className={styles.itemTitle}>{item.title}</h4>
-                </div>
-              </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-3 h-[600px]">
+        {/* Large item taking 2x2 */}
+        <div className="col-span-2 row-span-2 bg-card rounded-2xl overflow-hidden relative group">
+          <div className="w-full h-full min-h-[180px] flex flex-col items-center justify-center gap-3 p-6 bg-navy border border-[rgba(200,232,53,0.15)] transition-all group-hover:border-[rgba(200,232,53,0.4)]">
+            <span className="text-[28px]">🎾</span>
+            <div className="text-[12px] text-muted font-medium tracking-[1px] text-center uppercase">Tournament Finals</div>
+          </div>
+        </div>
+        
+        {/* Standard items */}
+        {[
+          { icon: "🏓", label: "Pickleball Drop-In" },
+          { icon: "🏆", label: "State Champions" },
+          { icon: "👨‍👩‍👧", label: "Kids Batch" },
+          { icon: "🎾", label: "Evening Lights" }
+        ].map((item, i) => (
+          <div key={i} className="bg-card rounded-2xl overflow-hidden relative group">
+            <div className="w-full h-full min-h-[180px] flex flex-col items-center justify-center gap-3 p-6 bg-navy border border-[rgba(200,232,53,0.15)] transition-all group-hover:border-[rgba(200,232,53,0.4)]">
+              <span className="text-[28px]">{item.icon}</span>
+              <div className="text-[12px] text-muted font-medium tracking-[1px] text-center uppercase">{item.label}</div>
             </div>
-          ))}
-        </div>
-
-        <div className={`${styles.instaCta} reveal`}>
-          <a
-            href="https://instagram.com/surya_tennis_academy_indore"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-outline"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
-            </svg>
-            Follow @surya_tennis_academy_indore
-          </a>
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   );
