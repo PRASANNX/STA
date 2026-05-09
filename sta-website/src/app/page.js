@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
+import Preloader from "@/components/Preloader";
 import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
 import About from "@/components/About";
@@ -15,10 +17,12 @@ import Footer from "@/components/Footer";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export default function Home() {
+  const [preloaderDone, setPreloaderDone] = useState(false);
   useScrollReveal();
 
   return (
     <>
+      <Preloader onComplete={() => setPreloaderDone(true)} />
       <Navigation />
       
       <main>
