@@ -1,0 +1,199 @@
+.programs { overflow: hidden; }
+
+.header { margin-bottom: var(--space-3xl); }
+
+.titleHL { color: var(--color-tennis-yellow); }
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: 0.55rem 1.4rem;
+  border-radius: var(--radius-full);
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+  letter-spacing: 0.02em;
+}
+
+.filterBtn:hover {
+  border-color: rgba(199,249,62,0.5);
+  color: var(--color-white);
+}
+
+.filterActive {
+  background: var(--color-tennis-yellow) !important;
+  color: var(--color-navy) !important;
+  border-color: var(--color-tennis-yellow) !important;
+}
+
+/* Info Banner */
+.infoBanner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(199,249,62,0.08);
+  border: 1px solid rgba(199,249,62,0.15);
+  border-radius: var(--radius-md);
+  color: var(--color-tennis-yellow);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  margin-bottom: var(--space-2xl);
+}
+
+.infoBanner svg { stroke: var(--color-tennis-yellow); flex-shrink: 0; }
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+/* Card */
+.card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  transition: all var(--duration-normal) var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-normal) var(--ease-smooth);
+}
+
+.card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(199,249,62,0.2);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-md);
+}
+
+.cardIcon { font-size: 2rem; }
+
+.cardBadges {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.sportBadge {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ageBadge {
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.6);
+}
+
+.cardTitle {
+  font-size: var(--text-lg) !important;
+  color: var(--color-white) !important;
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+}
+
+.cardDesc {
+  font-size: var(--text-sm);
+  color: rgba(255,255,255,0.55) !important;
+  line-height: 1.6;
+  flex: 1;
+  margin-bottom: var(--space-lg);
+}
+
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: var(--space-lg);
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.45);
+}
+
+.metaItem svg {
+  stroke: var(--color-tennis-yellow);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.cardCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-tennis-yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.cardCta:hover {
+  gap: 0.8rem;
+  color: var(--color-white);
+}
+
+.cardCta svg { stroke: currentColor; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+}
