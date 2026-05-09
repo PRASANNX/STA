@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import useAppStore from "@/store/useAppStore";
 
 export default function SportSelector() {
   const [active, setActive] = useState(0);
+  const setActiveSport = useAppStore((state) => state.setActiveSport);
 
   const sports = [
-    { name: "TENNIS", icon: "🎾" },
-    { name: "PICKLEBALL", icon: "🏓" },
-    { name: "TABLE TENNIS", icon: "🏓" },
-    { name: "FITNESS", icon: "🏋️" }
+    { name: "TENNIS", icon: "🎾", store: "tennis" },
+    { name: "PICKLEBALL", icon: "🏓", store: "pickleball" },
+    { name: "TABLE TENNIS", icon: "🏓", store: "tt" },
+    { name: "FITNESS", icon: "🏋️", store: "tennis" }
   ];
 
   return (
@@ -19,7 +21,11 @@ export default function SportSelector() {
         return (
           <div
             key={idx}
-            onMouseEnter={() => setActive(idx)}
+            onMouseEnter={() => {
+              setActive(idx);
+              setActiveSport(sport.store);
+            }}
+            onMouseLeave={() => setActiveSport("tennis")}
             className={`flex items-center justify-between px-7 py-4 rounded-[60px] border-[1.5px] cursor-pointer transition-all duration-250 relative overflow-hidden group ${
               isActive
                 ? "bg-lime border-lime"

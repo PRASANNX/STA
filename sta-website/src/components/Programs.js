@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import useAppStore from "@/store/useAppStore";
 
 const allPrograms = [
   { id: 1, sport: "tennis", sportName: "🎾 Tennis", title: "Junior Starter", age: "Kids · Age 5–12 · Beginner", price: "₹2,500" },
@@ -13,6 +14,7 @@ const allPrograms = [
 
 export default function Programs() {
   const [filter, setFilter] = useState("all");
+  const setActiveSport = useAppStore((state) => state.setActiveSport);
 
   const filteredPrograms = allPrograms.filter((p) => {
     if (filter === "all") return true;
@@ -63,7 +65,12 @@ export default function Programs() {
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredPrograms.map((p) => (
-          <div key={p.id} className="bg-card border border-[rgba(200,232,53,0.15)] rounded-2xl flex flex-col justify-between transition-transform hover:-translate-y-1 hover:border-[rgba(200,232,53,0.4)]">
+          <div
+            key={p.id}
+            onMouseEnter={() => setActiveSport(p.sport)}
+            onMouseLeave={() => setActiveSport("tennis")}
+            className="bg-card border border-[rgba(200,232,53,0.15)] rounded-2xl flex flex-col justify-between transition-transform hover:-translate-y-1 hover:border-[rgba(200,232,53,0.4)]"
+          >
             <div className="p-7 pb-6 border-b border-[rgba(200,232,53,0.1)]">
               <div className="inline-flex items-center gap-1.5 bg-navy border border-[rgba(200,232,53,0.2)] px-3 py-1 rounded text-[11px] font-semibold uppercase tracking-[1px] text-white mb-5">
                 {p.sportName}
