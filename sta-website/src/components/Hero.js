@@ -1,78 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { View } from "@react-three/drei";
+import TennisBall3D from "@/components/canvas/TennisBall3D";
 
 export default function Hero() {
-  const wrapperRef = useRef(null);
-  const sceneRef = useRef(null);
-
-  // Pickleball Hole Data
-  const holes = [
-    {top:18,left:35,w:9,h:9},{top:20,left:55,w:8,h:8},{top:20,left:72,w:7,h:7},
-    {top:32,left:22,w:10,h:10},{top:32,left:44,w:9,h:9},{top:34,left:62,w:8,h:8},{top:30,left:78,w:7,h:7},
-    {top:46,left:15,w:9,h:9},{top:47,left:35,w:10,h:10},{top:46,left:55,w:9,h:9},{top:47,left:72,w:8,h:8},{top:44,left:86,w:6,h:6},
-    {top:60,left:22,w:9,h:9},{top:60,left:42,w:9,h:9},{top:60,left:62,w:8,h:8},{top:58,left:78,w:7,h:7},
-    {top:74,left:30,w:9,h:9},{top:73,left:50,w:8,h:8},{top:74,left:68,w:7,h:7},
-    {top:82,left:40,w:8,h:8},{top:83,left:58,w:7,h:7},
-  ];
-
-  useEffect(() => {
-    const wrapper = wrapperRef.current;
-    const scene = sceneRef.current;
-    let ticking = false;
-    let currentX = 0, currentY = 0;
-    let targetX = 0, targetY = 0;
-
-    function getScrollProgress() {
-      const doc = document.documentElement;
-      const scrollTop = window.scrollY || doc.scrollTop;
-      const scrollHeight = doc.scrollHeight - doc.clientHeight;
-      return scrollHeight > 0 ? scrollTop / scrollHeight : 0;
-    }
-
-    function onScroll() {
-      const progress = getScrollProgress();
-      targetY = progress * 360 * 2.5;
-      targetX = progress * 360 * 0.8;
-      if (!ticking) {
-        requestAnimationFrame(render);
-        ticking = true;
-      }
-    }
-
-    function render() {
-      currentX += (targetX - currentX) * 0.12;
-      currentY += (targetY - currentY) * 0.12;
-      if (wrapper) {
-        wrapper.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
-      }
-      ticking = false;
-
-      if (Math.abs(targetX - currentX) > 0.1 || Math.abs(targetY - currentY) > 0.1) {
-        ticking = true;
-        requestAnimationFrame(render);
-      }
-    }
-
-    const onMouseEnter = () => {
-      targetY += 60;
-      targetX += 20;
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(render);
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    if (scene) scene.addEventListener("mouseenter", onMouseEnter);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (scene) scene.removeEventListener("mouseenter", onMouseEnter);
-    };
-  }, []);
-
   return (
     <section className="min-h-screen grid grid-cols-1 lg:grid-cols-2 items-center px-6 lg:px-12 pt-[100px] pb-[60px] relative overflow-hidden text-center lg:text-left" id="hero">
       <div className="hero-bg"></div>
@@ -102,18 +34,10 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 flex items-center justify-center mt-12 lg:mt-0">
-        <div className="ball-scene" ref={sceneRef}>
-          <div className="ball-wrapper" ref={wrapperRef}>
-            <div className="ball-sphere">
-              {holes.map((h, i) => (
-                <div
-                  key={i}
-                  className="ball-hole"
-                  style={{ top: `${h.top}%`, left: `${h.left}%`, width: `${h.w}%`, height: `${h.h}%` }}
-                />
-              ))}
-            </div>
-          </div>
+        <div className="view-container">
+          <View className="absolute inset-0">
+            <TennisBall3D />
+          </View>
           <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-muted text-[11px] tracking-[2px] uppercase flex flex-col items-center gap-2">
             <span>Scroll</span>
             <div className="w-[1px] h-8 bg-gradient-to-b from-lime to-transparent var(--animate-scroll-arrow)"></div>

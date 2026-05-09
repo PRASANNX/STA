@@ -1,5 +1,6 @@
 import "./globals.css";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
+import Scene from "@/components/canvas/Scene";
 
 export const metadata = {
   title: "Surya Tennis & Pickleball Academy | 10 Years of Excellence in Indore",
@@ -79,6 +80,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <Scene />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>
