@@ -33,8 +33,8 @@ export default function Stats() {
           const obj = { val: 0 };
           gsap.to(obj, {
             val: stat.value,
-            duration: 1.8,
-            ease: "power2.out",
+            duration: 2.5,
+            ease: "expo.out",
             delay: i * 0.15,
             onUpdate: () => {
               setCounts((prev) => {

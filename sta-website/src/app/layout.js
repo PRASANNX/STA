@@ -2,7 +2,15 @@ import "./globals.css";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import Scene from "@/components/canvas/Scene";
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: "#0a0f1e",
+};
+
 export const metadata = {
+  metadataBase: new URL("https://sta-website.vercel.app"),
   title: "Surya Tennis & Pickleball Academy | 10 Years of Excellence in Indore",
   description:
     "Surya Tennis Academy (STA) — Indore's premier tennis, pickleball & table tennis academy. 10+ years of producing state, national & international players under Director Suryansh Yadav. Book your free trial today.",
@@ -12,8 +20,25 @@ export const metadata = {
     title: "Surya Tennis & Pickleball Academy | Indore",
     description:
       "10 Years of Excellence. Train with the best coaches in Indore. Tennis, Pickleball & Table Tennis.",
+    url: "https://sta-website.vercel.app",
+    siteName: "Surya Tennis & Pickleball Academy",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Surya Tennis & Pickleball Academy",
+      },
+    ],
     type: "website",
     locale: "en_IN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Surya Tennis & Pickleball Academy | Indore",
+    description:
+      "10 Years of Excellence. Train with the best coaches in Indore. Tennis, Pickleball & Table Tennis.",
+    images: ["/opengraph-image.png"],
   },
 };
 

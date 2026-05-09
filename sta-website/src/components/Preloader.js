@@ -40,13 +40,13 @@ export default function Preloader({ onComplete }) {
       "-=0.2"
     );
 
-    // Phase 3: Hold, then wipe away
-    tl.to({}, { duration: 0.6 });
+    // Phase 3: Hold to allow WebGL compiling, then wipe away
+    tl.to({}, { duration: 1.0 });
 
     tl.to(containerRef.current, {
       yPercent: -100,
-      duration: 0.8,
-      ease: "power3.inOut",
+      duration: 0.9,
+      ease: "power4.inOut",
     });
 
     return () => tl.kill();
