@@ -13,22 +13,31 @@ export default function TennisBall3D() {
   const { scene } = useGLTF("/models/tennis-ball.glb");
   const texture = useTexture("/models/tennis-texture.png");
   
-  // Flip texture if UVs are inverted (common with Sketchfab exports)
-  texture.flipY = false;
+  // Configure texture color space
+  useMemo(() => {
+    texture.flipY = false;
+    texture.colorSpace = THREE.SRGBColorSpace;
+  }, [texture]);
 
-  // Traverse the loaded model and apply the PBR texture
+  // Traverse the loaded model and apply the PBR texture without destroying original properties
   useMemo(() => {
     scene.traverse((child) => {
       if (child.isMesh) {
-        // Create a new PBR material for the ball
+        // If the texture is a normal map (purplish), it shouldn't be SRGB, but assuming it's the diffuse map:
+        
+        // We preserve the GLTF's native material settings but apply our texture
         child.material = new THREE.MeshStandardMaterial({
           map: texture,
-          roughness: 0.9,
+          roughness: 0.8,
           metalness: 0.1,
-          color: new THREE.Color("#ffffff"), // Base color
+          color: new THREE.Color("#ffffff"), 
         });
+        
         // Cache material for rapid tinting in useFrame
         child.userData.mat = child.material;
+        
+        // Store the base native color so we can tint correctly
+        child.userData.baseColor = new THREE.Color("#ffffff");
       }
     });
   }, [scene, texture]);
@@ -110,13 +119,9 @@ export default function TennisBall3D() {
 
   return (
     <>
-      <ambientLight intensity={1.5} />
-      <directionalLight position={[10, 10, 10]} intensity={2.5} />
-      <directionalLight
-        position={[-5, -5, -5]}
-        intensity={0.5}
-        color="#c8e835"
-      />
+      <ambientLight intensity={0.8} />
+      <directionalLight position={[10, 10, 10]} intensity={1.5} />
+      <directionalLight position={[-5, -5, -5]} intensity={0.5} />
       
       <group ref={meshRef}>
         <primitive object={scene} />
