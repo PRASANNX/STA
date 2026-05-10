@@ -7,6 +7,7 @@ import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
 import About from "@/components/About";
 import Programs from "@/components/Programs";
+import SlotBooking from "@/components/SlotBooking";
 import Coaches from "@/components/Coaches";
 import Achievements from "@/components/Achievements";
 import Gallery from "@/components/Gallery";
@@ -30,6 +31,7 @@ export default function Home() {
         <Stats />
         <About />
         <Programs />
+        <SlotBooking />
         <Coaches />
         <Achievements />
         <Gallery />
