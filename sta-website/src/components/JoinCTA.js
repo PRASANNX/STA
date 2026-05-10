@@ -4,18 +4,18 @@ import Link from "next/link";
 
 export default function JoinCTA() {
   return (
-    <section id="cta" className="py-[120px] px-6 lg:px-12 bg-gradient-to-b from-navy-2 to-navy text-center relative overflow-hidden reveal-item">
+    <section id="cta" className="py-[120px] px-6 lg:px-12 bg-dark text-center relative overflow-hidden reveal-item">
       {/* Background Decor */}
       <div className="absolute w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(200,232,53,0.06)_0%,transparent_70%)] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
       
       <div className="relative z-10">
-        <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+        <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-accent mb-6">
           Join STA
         </div>
-        <h2 className="font-heading text-[clamp(48px,6vw,88px)] leading-none tracking-[1px] mb-4 text-white">
-          Ready to Join<br />The <span className="text-lime">STA Legacy?</span>
+        <h2 className="font-heading text-[clamp(48px,6vw,88px)] leading-none tracking-[1px] mb-4 text-background">
+          Ready to Join<br />The <span className="text-accent">STA Legacy?</span>
         </h2>
-        <p className="text-muted text-[16px] leading-[1.7] max-w-[480px] mx-auto mb-12">
+        <p className="text-background/60 text-[16px] leading-[1.7] max-w-[480px] mx-auto mb-12">
           Book a free trial session today. No commitment. Just come, play, and feel the STA difference.
         </p>
 
@@ -26,7 +26,7 @@ export default function JoinCTA() {
             </svg>
             WhatsApp Suryansh Sir
           </a>
-          <a href="mailto:info@sta.ind.in" className="bg-transparent text-white border-[1.5px] border-[rgba(200,232,53,0.3)] px-7 py-3.5 rounded-full text-[14px] font-semibold transition-all hover:bg-lime hover:border-lime hover:text-navy inline-flex items-center justify-center">
+          <a href="mailto:info@sta.ind.in" className="bg-transparent text-background border-[1.5px] border-[rgba(200,232,53,0.3)] px-7 py-3.5 rounded-full text-[14px] font-semibold transition-all hover:bg-accent hover:border-accent hover:text-dark inline-flex items-center justify-center">
             Book Free Trial Session
           </a>
         </div>
@@ -34,15 +34,15 @@ export default function JoinCTA() {
         <div className="flex flex-wrap justify-center gap-10 lg:gap-14">
           <div className="flex flex-col items-center gap-1.5">
             <div className="text-[11px] text-muted tracking-[2px] uppercase font-medium">Call / WhatsApp</div>
-            <div className="text-[15px] text-lime font-semibold">+91 97545 44265</div>
+            <div className="text-[15px] text-accent font-semibold">+91 97545 44265</div>
           </div>
           <div className="flex flex-col items-center gap-1.5">
             <div className="text-[11px] text-muted tracking-[2px] uppercase font-medium">Email</div>
-            <div className="text-[15px] text-lime font-semibold">info@sta.ind.in</div>
+            <div className="text-[15px] text-accent font-semibold">info@sta.ind.in</div>
           </div>
           <div className="flex flex-col items-center gap-1.5">
-            <div className="text-[11px] text-muted tracking-[2px] uppercase font-medium">Location</div>
-            <div className="text-[15px] text-lime font-semibold">Kanadia Main Road, Indore</div>
+            <div className="text-[11px] text-background/50 tracking-[2px] uppercase font-medium">Location</div>
+            <div className="text-[15px] text-accent font-semibold">Kanadia Main Road, Indore</div>
           </div>
         </div>
       </div>

@@ -31,19 +31,19 @@ export default function Camps() {
   ];
 
   return (
-    <section id="camps" className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-navy-2 reveal-item">
-      <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+    <section id="camps" className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-background-2 reveal-item">
+      <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-accent mb-6">
         Camps & Events
       </div>
-      <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-14 text-white">
-        Train Hard.<br /><span className="text-lime">Play Bigger.</span>
+      <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-14 text-foreground">
+        Train Hard.<br /><span className="text-accent">Play Bigger.</span>
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {camps.map((camp, i) => {
           const isUpcoming = camp.status === "Upcoming";
           return (
-            <div key={i} className="bg-card border border-[rgba(200,232,53,0.15)] rounded-2xl p-8 relative transition-transform hover:-translate-y-1 hover:border-[rgba(200,232,53,0.4)]">
+            <div key={i} className="bg-surface border border-[rgba(200,232,53,0.15)] rounded-2xl p-8 relative transition-transform hover:-translate-y-1 hover:border-[rgba(200,232,53,0.4)]">
               <div className={`inline-block px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[1.5px] uppercase mb-5 ${
                 isUpcoming 
                   ? "bg-[rgba(57,211,83,0.1)] text-green-bright border border-[rgba(57,211,83,0.25)]" 
@@ -51,7 +51,7 @@ export default function Camps() {
               }`}>
                 {camp.status}
               </div>
-              <h3 className="font-heading text-[30px] tracking-[1px] text-white mb-2.5">{camp.title}</h3>
+              <h3 className="font-heading text-[30px] tracking-[1px] text-foreground mb-2.5">{camp.title}</h3>
               <p className="text-muted text-[13px] leading-[1.6] mb-5">
                 {camp.desc}
               </p>
@@ -69,8 +69,8 @@ export default function Camps() {
                 )}
               </div>
 
-              <button className={`bg-transparent border-[1.5px] border-[rgba(200,232,53,0.15)] text-white px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all ${
-                isUpcoming ? "cursor-pointer hover:bg-lime hover:border-lime hover:text-navy" : "opacity-50 cursor-default"
+              <button className={`bg-transparent border-[1.5px] border-[rgba(200,232,53,0.15)] text-foreground px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all ${
+                isUpcoming ? "cursor-pointer hover:bg-accent hover:border-accent hover:text-background" : "opacity-50 cursor-default"
               }`}>
                 {isUpcoming ? "Register Now →" : "View Highlights"}
               </button>

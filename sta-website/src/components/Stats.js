@@ -65,7 +65,7 @@ export default function Stats() {
               : ""
           } ${i < 2 ? "border-b lg:border-b-0 border-[rgba(200,232,53,0.15)]" : ""}`}
         >
-          <div className="font-heading text-[52px] text-lime leading-none">
+          <div className="font-heading text-[52px] text-accent leading-none">
             {counts[i]}
             {stat.suffix}
           </div>

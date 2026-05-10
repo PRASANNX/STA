@@ -57,23 +57,23 @@ export default function Preloader({ onComplete }) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[200] bg-navy flex flex-col items-center justify-center gap-6"
+      className="fixed inset-0 z-[200] bg-background flex flex-col items-center justify-center gap-6"
     >
       {/* Animated Ball */}
       <div
         ref={ballRef}
-        className="w-20 h-20 rounded-full bg-lime shadow-[0_0_60px_rgba(200,232,53,0.4)] flex items-center justify-center"
+        className="w-20 h-20 rounded-full bg-accent shadow-[0_0_60px_rgba(200,232,53,0.4)] flex items-center justify-center"
         style={{ transform: "scale(0)" }}
       >
         <div className="w-full h-full rounded-full relative overflow-hidden">
-          <div className="absolute w-full h-[2px] bg-navy/30 top-1/2 -translate-y-1/2 -rotate-[20deg]" />
-          <div className="absolute w-full h-[2px] bg-navy/20 top-1/2 -translate-y-1/2 rotate-[30deg]" />
+          <div className="absolute w-full h-[2px] bg-background/30 top-1/2 -translate-y-1/2 -rotate-[20deg]" />
+          <div className="absolute w-full h-[2px] bg-background/20 top-1/2 -translate-y-1/2 rotate-[30deg]" />
         </div>
       </div>
 
       {/* Text */}
       <div className="text-center" style={{ opacity: 0 }} ref={textRef}>
-        <div className="font-heading text-[48px] md:text-[64px] tracking-[4px] text-white leading-none">
+        <div className="font-heading text-[48px] md:text-[64px] tracking-[4px] text-foreground leading-none">
           STA
         </div>
       </div>

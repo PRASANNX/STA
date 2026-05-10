@@ -1,18 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy: #0a0f1e;
-  --color-navy-2: #0d1428;
-  --color-navy-3: #111935;
-  --color-lime: #c8e835;
-  --color-lime-2: #a8c41a;
-  --color-white: #f5f5f0;
-  --color-muted: #8892a4;
-  --color-card: #131b30;
-  --color-card-2: #0f1724;
+  --color-background: #f4f1f0;
+  --color-background-2: #ece9e2;
+  --color-background-3: #e2dfd5;
+  --color-foreground: #1a1a1a;
+  --color-muted: #555555;
+  --color-surface: #ffffff;
+  --color-surface-2: #fcfcfc;
+  --color-accent: #c8e835;
+  --color-accent-2: #a8c41a;
+  --color-dark: #0a0f1e;
+  --color-dark-2: #0d1428;
+  --color-border-theme: rgba(0,0,0,0.1);
   --color-green-bright: #39d353;
   --color-orange: #ff6b35;
-  --color-border-theme: rgba(200,232,53,0.15);
 
   --font-heading: "Bebas Neue", sans-serif;
   --font-body: "Plus Jakarta Sans", sans-serif;
@@ -36,8 +38,8 @@
 @layer base {
   html { scroll-behavior: smooth; }
   body {
-    background-color: var(--color-navy);
-    color: var(--color-white);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
     font-family: var(--font-body);
     overflow-x: hidden;
   }
@@ -58,7 +60,7 @@
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(200,232,53,0.04) 0%, transparent 70%);
+  background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(200,232,53,0.08) 0%, transparent 70%);
 }
 .cta-bg-ball {
   position: absolute;

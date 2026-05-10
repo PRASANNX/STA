@@ -71,10 +71,10 @@ export default function Hero() {
       <div className="relative z-10">
         <div
           ref={badgeRef}
-          className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-7"
+          className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-accent mb-7"
           style={{ opacity: 0 }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-lime animate-pulse"></span>
+          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
           10 Years of Excellence
         </div>
 
@@ -84,9 +84,9 @@ export default function Hero() {
         >
           <span className="hero-line block" style={{ opacity: 0 }}>Surya</span>
           <span className="hero-line block" style={{ opacity: 0 }}>Tennis</span>
-          <span className="hero-line block text-[clamp(50px,6vw,90px)] text-lime italic font-light" style={{ opacity: 0 }}>&</span>
+          <span className="hero-line block text-[clamp(50px,6vw,90px)] text-accent italic font-light" style={{ opacity: 0 }}>&</span>
           <span className="hero-line block" style={{ opacity: 0 }}>Pickleball</span>
-          <span className="hero-line block text-lime" style={{ opacity: 0 }}>Academy</span>
+          <span className="hero-line block text-accent" style={{ opacity: 0 }}>Academy</span>
         </h1>
 
         <p
@@ -96,7 +96,7 @@ export default function Hero() {
         >
           Indore&apos;s premier sports academy — producing State, National &
           International players under the leadership of{" "}
-          <strong className="text-lime font-semibold">
+          <strong className="text-accent font-semibold">
             Director Suryansh Yadav
           </strong>
           .
@@ -109,7 +109,7 @@ export default function Hero() {
         >
           <Link
             href="#cta"
-            className="bg-lime text-navy px-7 py-3.5 rounded-full font-bold text-[14px] no-underline inline-flex items-center gap-2 transition-all border-none cursor-pointer tracking-[0.3px] hover:bg-lime-2 hover:-translate-y-0.5"
+            className="bg-accent text-background px-7 py-3.5 rounded-full font-bold text-[14px] no-underline inline-flex items-center gap-2 transition-all border-none cursor-pointer tracking-[0.3px] hover:bg-accent-2 hover:-translate-y-0.5"
           >
             Book Free Trial
             <svg
@@ -125,7 +125,7 @@ export default function Hero() {
           </Link>
           <Link
             href="#about"
-            className="bg-transparent text-white px-7 py-3.5 rounded-full font-semibold text-[14px] no-underline inline-flex items-center gap-2 transition-all border-[1.5px] border-white/25 hover:border-lime hover:text-lime"
+            className="bg-transparent text-foreground px-7 py-3.5 rounded-full font-semibold text-[14px] no-underline inline-flex items-center gap-2 transition-all border-[1.5px] border-white/10 hover:border-accent hover:text-accent"
           >
             Our Story
           </Link>

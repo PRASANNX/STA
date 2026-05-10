@@ -89,15 +89,15 @@ export default function Achievements() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-24 items-center">
         <div className="reveal-item">
-          <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+          <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-accent mb-6">
             Legacy
           </div>
-          <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-4 text-white">
+          <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-4 text-foreground">
             10 Years.
             <br />
             Countless
             <br />
-            <span className="text-lime">Champions</span>
+            <span className="text-accent">Champions</span>
           </h2>
           <p className="text-muted text-[15px] leading-[1.7] max-w-[400px]">
             From state-level titles to international courts — STA players
@@ -109,14 +109,14 @@ export default function Achievements() {
           {achievements.map((item, i) => (
             <div
               key={i}
-              className="achievement-card flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 p-6 rounded-2xl bg-card border border-[rgba(200,232,53,0.1)] transition-all duration-300 hover:-translate-x-2 hover:border-lime hover:shadow-[0_0_30px_rgba(200,232,53,0.08)]"
+              className="achievement-card flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 p-6 rounded-2xl bg-surface border border-[rgba(200,232,53,0.1)] transition-all duration-300 hover:-translate-x-2 hover:border-accent hover:shadow-[0_0_30px_rgba(200,232,53,0.08)]"
               style={{ opacity: 0 }}
             >
-              <div className="achievement-num font-heading text-[48px] text-lime leading-none w-24 shrink-0">
+              <div className="achievement-num font-heading text-[48px] text-accent leading-none w-24 shrink-0">
                 {item.num}
               </div>
               <div>
-                <h4 className="font-heading text-[24px] tracking-[1px] text-white mb-2">
+                <h4 className="font-heading text-[24px] tracking-[1px] text-foreground mb-2">
                   {item.title}
                 </h4>
                 <p className="text-muted text-[13px] leading-[1.6] m-0">

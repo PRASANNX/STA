@@ -25,13 +25,13 @@ export default function Programs() {
   });
 
   return (
-    <section id="programs" className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-navy-2 reveal-item">
-      <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+    <section id="programs" className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-background-2 reveal-item">
+      <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-accent mb-6">
         Training Programs
       </div>
-      <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-4 text-white">
+      <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-4 text-foreground">
         Find Your<br />
-        <span className="text-lime">Program</span>
+        <span className="text-accent">Program</span>
       </h2>
       <p className="text-muted text-[15px] leading-[1.7] max-w-[500px] mb-8">
         Open every day for coaching. Court bookings available Tuesday–Sunday.
@@ -53,8 +53,8 @@ export default function Programs() {
             onClick={() => setFilter(btn.id)}
             className={`px-5 py-2 rounded-full text-[13px] font-semibold transition-all cursor-pointer border ${
               filter === btn.id
-                ? "bg-lime text-navy border-lime shadow-[0_0_15px_rgba(200,232,53,0.3)]"
-                : "bg-transparent text-muted border-[rgba(200,232,53,0.3)] hover:border-lime hover:text-white"
+                ? "bg-accent text-background border-accent shadow-[0_0_15px_rgba(200,232,53,0.3)]"
+                : "bg-transparent text-muted border-[rgba(200,232,53,0.3)] hover:border-accent hover:text-foreground"
             }`}
           >
             {btn.label}
@@ -69,14 +69,14 @@ export default function Programs() {
             key={p.id}
             onMouseEnter={() => setActiveSport(p.sport)}
             onMouseLeave={() => setActiveSport("tennis")}
-            className="bg-card border border-[rgba(200,232,53,0.15)] rounded-2xl flex flex-col justify-between transition-transform hover:-translate-y-1 hover:border-[rgba(200,232,53,0.4)]"
+            className="bg-surface border border-[rgba(200,232,53,0.15)] rounded-2xl flex flex-col justify-between transition-transform hover:-translate-y-1 hover:border-[rgba(200,232,53,0.4)]"
           >
             <div className="p-7 pb-6 border-b border-[rgba(200,232,53,0.1)]">
-              <div className="inline-flex items-center gap-1.5 bg-navy border border-[rgba(200,232,53,0.2)] px-3 py-1 rounded text-[11px] font-semibold uppercase tracking-[1px] text-white mb-5">
+              <div className="inline-flex items-center gap-1.5 bg-background border border-[rgba(200,232,53,0.2)] px-3 py-1 rounded text-[11px] font-semibold uppercase tracking-[1px] text-foreground mb-5">
                 {p.sportName}
               </div>
-              <h3 className="font-heading text-[28px] tracking-[1px] text-white mb-2">{p.title}</h3>
-              <p className="text-lime text-[13px] font-medium mb-5">{p.age}</p>
+              <h3 className="font-heading text-[28px] tracking-[1px] text-foreground mb-2">{p.title}</h3>
+              <p className="text-accent text-[13px] font-medium mb-5">{p.age}</p>
               <div className="flex items-center gap-2 text-[12px] text-muted">
                 <div className="w-1.5 h-1.5 rounded-full bg-[rgba(200,232,53,0.5)]"></div>
                 6:00–10:00 AM &nbsp;|&nbsp; 4:00–10:00 PM
@@ -84,9 +84,9 @@ export default function Programs() {
             </div>
             <div className="p-6 pt-5 flex items-center justify-between">
               <div className="text-[13px] text-muted">
-                From <strong className="text-white text-[16px]">{p.price}/mo</strong>
+                From <strong className="text-foreground text-[16px]">{p.price}/mo</strong>
               </div>
-              <a href="#cta" className="text-lime text-[13px] font-semibold tracking-[1px] uppercase no-underline hover:underline">
+              <a href="#cta" className="text-accent text-[13px] font-semibold tracking-[1px] uppercase no-underline hover:underline">
                 Enroll →
               </a>
             </div>

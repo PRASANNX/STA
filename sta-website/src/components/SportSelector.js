@@ -28,15 +28,15 @@ export default function SportSelector() {
             onMouseLeave={() => setActiveSport("tennis")}
             className={`flex items-center justify-between px-7 py-4 rounded-[60px] border-[1.5px] cursor-pointer transition-all duration-250 relative overflow-hidden group ${
               isActive
-                ? "bg-lime border-lime"
-                : "border-[rgba(200,232,53,0.15)] hover:bg-lime hover:border-lime"
+                ? "bg-accent border-accent"
+                : "border-[rgba(200,232,53,0.15)] hover:bg-accent hover:border-accent"
             }`}
           >
             <div className="flex items-center gap-4">
               <span className="text-[22px]">{sport.icon}</span>
               <span
                 className={`font-heading text-[24px] tracking-[2px] ${
-                  isActive ? "text-navy" : "text-white group-hover:text-navy"
+                  isActive ? "text-background" : "text-foreground group-hover:text-background"
                 }`}
               >
                 {sport.name}
@@ -45,8 +45,8 @@ export default function SportSelector() {
             <div
               className={`text-[20px] transition-transform duration-200 ${
                 isActive
-                  ? "text-navy rotate-45"
-                  : "text-white group-hover:text-navy group-hover:rotate-45"
+                  ? "text-background rotate-45"
+                  : "text-foreground group-hover:text-background group-hover:rotate-45"
               }`}
             >
               ↗

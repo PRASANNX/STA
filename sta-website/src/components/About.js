@@ -59,12 +59,12 @@ export default function About() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* Left: Text & Timeline */}
         <div className="reveal-item">
-          <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+          <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-accent mb-6">
             About STA
           </div>
           <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-4">
             A Decade of Turning<br />Raw Talent Into<br />
-            <span className="text-lime">Champions</span>
+            <span className="text-accent">Champions</span>
           </h2>
           <div className="text-muted text-[15px] leading-[1.7] max-w-[500px] mb-8">
             Founded by Suryansh Yadav, Surya Tennis Academy has spent 10 years building a legacy in Indore. From beginner kids to competitive adults, we train players who go on to compete at state, national, and international levels.
@@ -76,9 +76,9 @@ export default function About() {
             { title: "PWR 200, League of Champions & more", desc: "Hosting and winning marquee tournaments in Indore." },
           ].map((item, i) => (
             <div key={i} className="flex gap-4 mb-6">
-              <div className="timeline-dot w-2.5 h-2.5 rounded-full bg-[rgba(200,232,53,0.4)] border-2 border-lime mt-1.5 shrink-0 shadow-[0_0_10px_rgba(200,232,53,0.5)]" style={{ transform: "scale(0)" }}></div>
-              <p className="text-[14px] leading-[1.6] text-white/90 m-0">
-                <strong className="text-white font-semibold">{item.title}</strong> — {item.desc}
+              <div className="timeline-dot w-2.5 h-2.5 rounded-full bg-[rgba(200,232,53,0.4)] border-2 border-accent mt-1.5 shrink-0 shadow-[0_0_10px_rgba(200,232,53,0.5)]" style={{ transform: "scale(0)" }}></div>
+              <p className="text-[14px] leading-[1.6] text-foreground/90 m-0">
+                <strong className="text-foreground font-semibold">{item.title}</strong> — {item.desc}
               </p>
             </div>
           ))}
@@ -96,28 +96,28 @@ export default function About() {
               key={i}
               className={`pillar-card p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(200,232,53,0.08)] ${
                 p.lime
-                  ? "bg-lime text-navy"
-                  : "bg-card border border-[rgba(200,232,53,0.15)]"
+                  ? "bg-accent text-background"
+                  : "bg-surface border border-[rgba(200,232,53,0.15)]"
               }`}
               style={{ opacity: 0 }}
             >
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center text-[20px] mb-4 ${
-                  p.lime ? "bg-navy/10" : "bg-[rgba(200,232,53,0.1)]"
+                  p.lime ? "bg-background/10" : "bg-[rgba(200,232,53,0.1)]"
                 }`}
               >
                 {p.icon}
               </div>
               <h4
                 className={`font-heading text-[22px] tracking-[1px] mb-2 ${
-                  p.lime ? "" : "text-white"
+                  p.lime ? "" : "text-foreground"
                 }`}
               >
                 {p.title}
               </h4>
               <p
                 className={`text-[13px] leading-[1.6] ${
-                  p.lime ? "text-navy/80" : "text-muted"
+                  p.lime ? "text-background/80" : "text-muted"
                 }`}
               >
                 {p.desc}

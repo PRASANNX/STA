@@ -107,16 +107,16 @@ export default function Testimonials() {
   return (
     <section
       ref={sectionRef}
-      className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-navy overflow-hidden"
+      className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-background overflow-hidden"
     >
       <div className="reveal-item">
-        <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-lime mb-6">
+        <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-accent mb-6">
           Reviews
         </div>
-        <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-14 text-white">
+        <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-14 text-foreground">
           The STA
           <br />
-          <span className="text-lime">Family Speaks</span>
+          <span className="text-accent">Family Speaks</span>
         </h2>
       </div>
 
@@ -129,25 +129,25 @@ export default function Testimonials() {
           {reviews.map((r, i) => (
             <div
               key={i}
-              className="testimonial-card w-[340px] md:w-[380px] shrink-0 bg-card border border-[rgba(200,232,53,0.15)] rounded-2xl p-7 transition-shadow hover:shadow-[0_0_30px_rgba(200,232,53,0.08)]"
+              className="testimonial-card w-[340px] md:w-[380px] shrink-0 bg-surface border border-[rgba(200,232,53,0.15)] rounded-2xl p-7 transition-shadow hover:shadow-[0_0_30px_rgba(200,232,53,0.08)]"
               style={{ opacity: 0 }}
             >
               <div className="flex gap-1 mb-4">
                 {[1, 2, 3, 4, 5].map((s) => (
-                  <span key={s} className="text-lime text-[14px]">
+                  <span key={s} className="text-accent text-[14px]">
                     ★
                   </span>
                 ))}
               </div>
-              <blockquote className="text-white text-[14px] leading-[1.7] mb-5 italic opacity-90">
+              <blockquote className="text-foreground text-[14px] leading-[1.7] mb-5 italic opacity-90">
                 {r.text}
               </blockquote>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[rgba(200,232,53,0.15)] border border-[rgba(200,232,53,0.3)] flex items-center justify-center shrink-0 font-heading text-[16px] text-lime">
+                <div className="w-10 h-10 rounded-full bg-[rgba(200,232,53,0.15)] border border-[rgba(200,232,53,0.3)] flex items-center justify-center shrink-0 font-heading text-[16px] text-accent">
                   {r.initials}
                 </div>
                 <div>
-                  <div className="text-[13px] font-semibold text-white">
+                  <div className="text-[13px] font-semibold text-foreground">
                     {r.name}
                   </div>
                   <div className="text-[11px] text-muted">{r.role}</div>
