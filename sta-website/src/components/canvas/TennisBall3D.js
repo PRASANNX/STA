@@ -146,12 +146,55 @@ export default function TennisBall3D() {
     materialRef.current.uniforms.uTTProgress.value = mt.currentTT;
     materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
 
-    // Scroll-synced rotation
+    // Scroll-synced physics
     const doc = document.documentElement;
     const scrollTop = window.scrollY || doc.scrollTop;
     const scrollHeight = doc.scrollHeight - doc.clientHeight;
     const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
 
+    // Mobile detection for responsive scaling
+    const isMobile = window.innerWidth < 768;
+    const baseScale = isMobile ? 0.6 : 1.0;
+    const xMultiplier = isMobile ? 0.4 : 1.0;
+
+    // Keyframe trajectory: [progress, x, y, scale]
+    const keyframes = [
+      { p: 0.0, x: 2.0, y: 0.5, s: 1.0 },       // Hero
+      { p: 0.2, x: -2.5, y: -0.5, s: 0.8 },     // About / Programs
+      { p: 0.5, x: 2.0, y: 0.0, s: 0.7 },       // Coaches / Testimonials
+      { p: 0.8, x: -1.5, y: 1.0, s: 0.9 },      // Gallery
+      { p: 1.0, x: 0.0, y: -0.5, s: 1.0 },      // Footer / CTA
+    ];
+
+    // Find current segment
+    let start = keyframes[0];
+    let end = keyframes[keyframes.length - 1];
+    for (let i = 0; i < keyframes.length - 1; i++) {
+      if (progress >= keyframes[i].p && progress <= keyframes[i + 1].p) {
+        start = keyframes[i];
+        end = keyframes[i + 1];
+        break;
+      }
+    }
+
+    // Interpolate values
+    const segmentProgress = (progress - start.p) / (end.p - start.p || 1);
+    // Smoothstep for buttery transitions
+    const smooth = segmentProgress * segmentProgress * (3 - 2 * segmentProgress);
+    
+    const targetX = (start.x + (end.x - start.x) * smooth) * xMultiplier;
+    const targetY = start.y + (end.y - start.y) * smooth;
+    const targetScale = (start.s + (end.s - start.s) * smooth) * baseScale;
+
+    // Apply with dampening for silky smooth movement
+    meshRef.current.position.x += (targetX - meshRef.current.position.x) * 0.05;
+    meshRef.current.position.y += (targetY - meshRef.current.position.y) * 0.05;
+    
+    const currentScale = meshRef.current.scale.x;
+    const nextScale = currentScale + (targetScale - currentScale) * 0.05;
+    meshRef.current.scale.set(nextScale, nextScale, nextScale);
+
+    // Rotation mapping
     meshRef.current.rotation.x = progress * Math.PI * 4;
     meshRef.current.rotation.y =
       progress * Math.PI * 2 + state.clock.elapsedTime * 0.3;

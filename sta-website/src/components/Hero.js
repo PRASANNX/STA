@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { View } from "@react-three/drei";
-import TennisBall3D from "@/components/canvas/TennisBall3D";
 
 export default function Hero() {
   const sectionRef = useRef(null);
@@ -134,10 +133,8 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 flex items-center justify-center mt-12 lg:mt-0">
-        <div className="view-container">
-          <View className="absolute inset-0">
-            <TennisBall3D />
-          </View>
+        <div className="view-container h-[400px] w-full max-w-[500px]">
+          {/* WebGL Ball now renders globally from Scene.js */}
           <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-muted text-[11px] tracking-[2px] uppercase flex flex-col items-center gap-2">
             <span>Scroll</span>
             <div className="w-[1px] h-8 bg-gradient-to-b from-lime to-transparent animate-pulse"></div>

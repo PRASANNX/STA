@@ -2,6 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
+import TennisBall3D from "@/components/canvas/TennisBall3D";
 
 export default function Scene() {
   return (
@@ -17,8 +18,8 @@ export default function Scene() {
       }}
       eventSource={typeof document !== "undefined" ? document.body : undefined}
       eventPrefix="client"
-      camera={{ position: [0, 0, 8], fov: 45 }}
     >
+      <TennisBall3D />
       <View.Port />
     </Canvas>
   );
