@@ -13,31 +13,36 @@ export default function TennisBall3D() {
   const { scene } = useGLTF("/models/tennis-ball.glb");
   const texture = useTexture("/models/tennis-texture.png");
   
-  // Configure texture color space
+  // Configure texture color space for Normal Map
   useMemo(() => {
     texture.flipY = false;
-    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.colorSpace = THREE.LinearSRGBColorSpace; // Normal maps MUST be linear, not SRGB
   }, [texture]);
 
-  // Traverse the loaded model and apply the PBR texture without destroying original properties
+  // Traverse the loaded model and apply the PBR normal map without destroying original colors
   useMemo(() => {
     scene.traverse((child) => {
       if (child.isMesh) {
-        // If the texture is a normal map (purplish), it shouldn't be SRGB, but assuming it's the diffuse map:
+        // The texture is a Normal Map (RGB 128,128,255), not a Diffuse map!
+        child.material.normalMap = texture;
+        // Deepen the fuzz bumps slightly
+        if (child.material.normalScale) {
+          child.material.normalScale = new THREE.Vector2(1.2, 1.2);
+        }
         
-        // We preserve the GLTF's native material settings but apply our texture
-        child.material = new THREE.MeshStandardMaterial({
-          map: texture,
-          roughness: 0.8,
-          metalness: 0.1,
-          color: new THREE.Color("#ffffff"), 
-        });
+        // Ensure standard PBR properties for realism
+        child.material.roughness = 0.85;
+        child.material.metalness = 0.1;
         
         // Cache material for rapid tinting in useFrame
         child.userData.mat = child.material;
         
-        // Store the base native color so we can tint correctly
-        child.userData.baseColor = new THREE.Color("#ffffff");
+        // Store the base native color so we can tint correctly and restore it
+        if (!child.userData.baseColor) {
+           child.userData.baseColor = child.material.color.clone();
+        }
+        
+        child.material.needsUpdate = true;
       }
     });
   }, [scene, texture]);
@@ -46,7 +51,6 @@ export default function TennisBall3D() {
 
   // Target colors for tinting the texture based on sport
   const targetColors = useMemo(() => ({
-    tennis: new THREE.Color("#ffffff"), // Native texture color
     pickleball: new THREE.Color("#e8f55a"), // Yellow-green tint
     tt: new THREE.Color("#ff6b35"), // Orange tint
   }), []);
@@ -56,11 +60,17 @@ export default function TennisBall3D() {
     if (!meshRef.current) return;
 
     // 1. Color Tinting Physics
-    const targetColor = targetColors[activeSport] || targetColors.tennis;
     scene.traverse((child) => {
-      if (child.isMesh && child.userData.mat) {
-        // Lerp towards the target color for a smooth transition
-        child.userData.mat.color.lerp(targetColor, 0.05);
+      if (child.isMesh && child.userData.mat && child.userData.baseColor) {
+        // Only tint the fuzz, not the white stripe!
+        // The white stripe's base color will be very high (e.g. > 0.8 on RGB)
+        const isWhiteStripe = child.userData.baseColor.r > 0.8 && child.userData.baseColor.g > 0.8 && child.userData.baseColor.b > 0.8;
+        
+        if (!isWhiteStripe) {
+           const targetColor = targetColors[activeSport] || child.userData.baseColor;
+           // Lerp towards the target color for a smooth transition
+           child.userData.mat.color.lerp(targetColor, 0.05);
+        }
       }
     });
 
@@ -119,9 +129,9 @@ export default function TennisBall3D() {
 
   return (
     <>
-      <ambientLight intensity={0.8} />
-      <directionalLight position={[10, 10, 10]} intensity={1.5} />
-      <directionalLight position={[-5, -5, -5]} intensity={0.5} />
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[10, 10, 10]} intensity={2.0} />
+      <directionalLight position={[-5, -5, -5]} intensity={0.5} color="#c8e835" />
       
       <group ref={meshRef}>
         <primitive object={scene} />
