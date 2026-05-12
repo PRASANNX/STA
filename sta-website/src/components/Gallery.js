@@ -1,20 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const galleryItems = [
-  { icon: "🎾", label: "Training Sessions", large: true },
-  { icon: "🏆", label: "Tournament Wins" },
-  { icon: "👨‍👩‍👧", label: "STA Family" },
-  { icon: "🏕️", label: "Summer Camps" },
-  { icon: "🎉", label: "Events" },
-  { icon: "⭐", label: "Achievements" },
-];
 
 export default function Gallery() {
   const sectionRef = useRef(null);
@@ -23,87 +13,72 @@ export default function Gallery() {
   useEffect(() => {
     if (!gridRef.current) return;
 
-    const items = gridRef.current.querySelectorAll(".gallery-cell");
-
-    // Staggered reveal with scale + fade
     gsap.fromTo(
-      items,
-      { y: 60, opacity: 0, scale: 0.92 },
+      gridRef.current.querySelectorAll(".gallery-card"),
+      { y: 60, opacity: 0, scale: 0.9 },
       {
         y: 0,
         opacity: 1,
         scale: 1,
-        duration: 0.7,
+        duration: 0.8,
+        stagger: 0.15,
         ease: "power2.out",
-        stagger: 0.1,
         scrollTrigger: {
           trigger: gridRef.current,
-          start: "top 80%",
+          start: "top 85%",
           once: true,
         },
       }
     );
-
-    // Parallax: odd columns move slower
-    items.forEach((item, i) => {
-      const speed = i % 2 === 0 ? 20 : -20;
-      gsap.to(item, {
-        y: speed,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.5,
-        },
-      });
-    });
-
-    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);
 
+  const items = [
+    { title: "Grand Ace Court", desc: "Premium hard court built for high-performance training.", size: "lg" },
+    { title: "Serena Arena", desc: "Indoor clay-feel court for tactical mastery.", size: "sm" },
+    { title: "Pickleball Hub", desc: "India's fastest growing sport, now at STA.", size: "sm" },
+    { title: "Elite Lounge", desc: "Relax and review your game in our player lounge.", size: "md" },
+  ];
+
   return (
-    <section
-      ref={sectionRef}
-      id="gallery"
-      className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-background-2"
-    >
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 reveal-item">
-        <div>
-          <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-accent mb-6">
-            Life At STA
-          </div>
-          <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] m-0 text-foreground">
-            Action <span className="text-accent">&</span> Energy
-          </h2>
-        </div>
-        <Link
-          href="https://instagram.com"
-          target="_blank"
-          className="bg-transparent text-foreground border-[1.5px] border-[rgba(200,232,53,0.3)] px-6 py-2.5 rounded-full text-[13px] font-semibold tracking-[1px] uppercase transition-all hover:bg-accent hover:border-accent hover:text-background inline-flex items-center justify-center whitespace-nowrap self-start lg:self-auto"
-        >
-          Follow @STA.Indore
-        </Link>
+    <section ref={sectionRef} id="gallery" className="py-[100px] lg:py-[150px] px-6 lg:px-12 bg-white overflow-hidden">
+      <div className="max-w-[800px] mb-16">
+        <div className="section-badge">Facility Tour</div>
+        <h2 className="font-heading text-[clamp(48px,6vw,88px)] leading-[0.9] text-navy uppercase mb-6">
+          Take A Tour <br />
+          <span className="text-sky">Of Our Facilities</span>
+        </h2>
+        <p className="text-muted text-[16px] leading-[1.8] max-w-[500px]">
+          Reserve a court for focused practice, team drills, or private coaching sessions, and elevate your game to the next level.
+        </p>
       </div>
 
-      <div
-        ref={gridRef}
-        className="grid grid-cols-2 md:grid-cols-3 gap-3 auto-rows-[200px] md:auto-rows-[240px]"
-      >
-        {galleryItems.map((item, i) => (
-          <div
-            key={i}
-            className={`gallery-cell bg-surface rounded-2xl overflow-hidden relative group cursor-pointer ${
-              item.large ? "col-span-2 row-span-2 md:col-span-1 md:row-span-2" : ""
+      <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {items.map((item, i) => (
+          <div 
+            key={i} 
+            className={`gallery-card relative rounded-[40px] overflow-hidden bg-navy group cursor-pointer shadow-[0_20px_40px_rgba(27,42,107,0.1)] transition-all duration-500 hover:shadow-[0_40px_80px_rgba(27,42,107,0.2)] ${
+                item.size === 'lg' ? 'lg:col-span-2 aspect-[16/9]' : 'aspect-square md:aspect-auto md:h-[400px]'
             }`}
-            style={{ opacity: 0 }}
           >
-            <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-6 bg-background border border-[rgba(200,232,53,0.15)] rounded-2xl transition-all duration-300 group-hover:border-accent group-hover:bg-surface group-hover:scale-[1.02]">
-              <span className="text-[36px] transition-transform duration-300 group-hover:scale-125">
-                {item.icon}
-              </span>
-              <div className="text-[12px] text-muted font-medium tracking-[1px] text-center uppercase transition-colors group-hover:text-accent">
-                {item.label}
-              </div>
+            {/* Overlay Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/20 to-transparent z-10 opacity-80 transition-opacity group-hover:opacity-90"></div>
+            
+            {/* Placeholder Text for Image */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
+                <span className="font-heading text-8xl text-white uppercase -rotate-12 select-none">STA</span>
+            </div>
+
+            {/* Content Overlay */}
+            <div className="absolute bottom-10 left-10 right-10 z-20 transform transition-transform duration-500 group-hover:translate-y-[-10px]">
+                <h4 className="font-heading text-3xl text-white uppercase mb-2 tracking-[1px]">{item.title}</h4>
+                <p className="text-white/60 text-[12px] leading-[1.6] max-w-[240px] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    {item.desc}
+                </p>
+            </div>
+
+            {/* Play/View Button */}
+            <div className="absolute top-10 right-10 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-500 scale-0 group-hover:scale-100">
+                <span className="text-xl">↗</span>
             </div>
           </div>
         ))}

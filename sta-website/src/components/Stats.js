@@ -23,7 +23,7 @@ export default function Stats() {
 
     ScrollTrigger.create({
       trigger: containerRef.current,
-      start: "top 80%",
+      start: "top 85%",
       once: true,
       onEnter: () => {
         if (hasAnimated.current) return;
@@ -33,9 +33,9 @@ export default function Stats() {
           const obj = { val: 0 };
           gsap.to(obj, {
             val: stat.value,
-            duration: 2.5,
+            duration: 2,
             ease: "expo.out",
-            delay: i * 0.15,
+            delay: i * 0.1,
             onUpdate: () => {
               setCounts((prev) => {
                 const next = [...prev];
@@ -45,6 +45,12 @@ export default function Stats() {
             },
           });
         });
+
+        gsap.fromTo(
+          containerRef.current.querySelectorAll(".stat-item"),
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power2.out" }
+        );
       },
     });
 
@@ -54,22 +60,20 @@ export default function Stats() {
   return (
     <div
       ref={containerRef}
-      className="grid grid-cols-2 lg:grid-cols-4 border-t border-b border-[rgba(200,232,53,0.15)] mx-6 lg:mx-12"
+      className="grid grid-cols-2 lg:grid-cols-4 border-t border-b border-navy/10 bg-white"
     >
       {stats.map((stat, i) => (
         <div
           key={i}
-          className={`py-8 text-center relative ${
-            i < 3
-              ? "border-r-0 lg:border-r border-[rgba(200,232,53,0.15)]"
-              : ""
-          } ${i < 2 ? "border-b lg:border-b-0 border-[rgba(200,232,53,0.15)]" : ""}`}
+          className={`stat-item py-12 lg:py-16 text-center relative transition-colors hover:bg-cream/50 ${
+            i < 3 ? "lg:border-r border-navy/10" : ""
+          } ${i < 2 ? "border-b lg:border-b-0 border-navy/10" : ""} ${i === 2 ? "border-b md:border-b-0 border-navy/10" : ""}`}
         >
-          <div className="font-heading text-[52px] text-accent leading-none">
+          <div className="font-heading text-[clamp(50px,6vw,80px)] text-navy leading-none mb-2">
             {counts[i]}
-            {stat.suffix}
+            <span className="text-orange">{stat.suffix}</span>
           </div>
-          <div className="text-[12px] text-muted tracking-[1.5px] uppercase mt-1 font-medium">
+          <div className="text-[11px] text-muted tracking-[2px] uppercase font-bold">
             {stat.label}
           </div>
         </div>
