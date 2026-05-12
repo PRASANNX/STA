@@ -8,44 +8,41 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
   const sectionRef = useRef(null);
-  const pillarsRef = useRef(null);
+  const textRef = useRef(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !pillarsRef.current) return;
+    if (!sectionRef.current) return;
 
-    // Pillar cards stagger in with slight rotation
-    const cards = pillarsRef.current.querySelectorAll(".pillar-card");
+    // Reveal the large background text
     gsap.fromTo(
-      cards,
-      { y: 50, opacity: 0, rotateY: 8 },
+      sectionRef.current.querySelectorAll(".bg-text-line"),
+      { x: -100, opacity: 0 },
       {
-        y: 0,
-        opacity: 1,
-        rotateY: 0,
-        duration: 0.7,
-        ease: "power2.out",
-        stagger: 0.12,
+        x: 0,
+        opacity: 0.05,
+        duration: 1.5,
+        stagger: 0.2,
         scrollTrigger: {
-          trigger: pillarsRef.current,
-          start: "top 85%",
+          trigger: sectionRef.current,
+          start: "top 80%",
           once: true,
         },
       }
     );
 
-    // Timeline dots pulse sequentially
-    const dots = sectionRef.current.querySelectorAll(".timeline-dot");
+    // Image card animation
     gsap.fromTo(
-      dots,
-      { scale: 0 },
+      sectionRef.current.querySelector(".about-image-card"),
+      { scale: 0.8, opacity: 0, rotate: -5 },
       {
         scale: 1,
-        duration: 0.4,
-        ease: "back.out(2)",
-        stagger: 0.2,
+        opacity: 1,
+        rotate: 0,
+        duration: 1,
+        ease: "power2.out",
         scrollTrigger: {
-          trigger: dots[0]?.parentElement?.parentElement,
-          start: "top 80%",
+          trigger: sectionRef.current,
+          start: "top 60%",
           once: true,
         },
       }
@@ -55,75 +52,66 @@ export default function About() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="py-[72px] lg:py-[120px] px-6 lg:px-12">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-        {/* Left: Text & Timeline */}
-        <div className="reveal-item">
-          <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-accent mb-6">
-            About STA
-          </div>
-          <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-4">
-            A Decade of Turning<br />Raw Talent Into<br />
-            <span className="text-accent">Champions</span>
-          </h2>
-          <div className="text-muted text-[15px] leading-[1.7] max-w-[500px] mb-8">
-            Founded by Suryansh Yadav, Surya Tennis Academy has spent 10 years building a legacy in Indore. From beginner kids to competitive adults, we train players who go on to compete at state, national, and international levels.
-          </div>
+    <section ref={sectionRef} id="about" className="py-[100px] lg:py-[180px] px-6 lg:px-12 relative overflow-hidden bg-cream">
+      {/* Massive Background Typography */}
+      <div className="absolute inset-0 flex flex-col justify-center pointer-events-none select-none px-4">
+        <div className="bg-text-line font-heading text-[clamp(100px,20vw,300px)] leading-[0.8] text-navy opacity-0 whitespace-nowrap">
+          SKILLED QUALITY
+        </div>
+        <div className="bg-text-line font-heading text-[clamp(100px,20vw,300px)] leading-[0.8] text-navy opacity-0 whitespace-nowrap translate-x-[10%]">
+          FOCUS INSTRUCTOR
+        </div>
+      </div>
 
-          {[
-            { title: "Founded in Indore", desc: "Started with a single court and a vision to build champions at Kanadia Main Road." },
-            { title: "Surya Pickleball Academy launched", desc: "Expanding beyond tennis to India's fastest-growing sport." },
-            { title: "PWR 200, League of Champions & more", desc: "Hosting and winning marquee tournaments in Indore." },
-          ].map((item, i) => (
-            <div key={i} className="flex gap-4 mb-6">
-              <div className="timeline-dot w-2.5 h-2.5 rounded-full bg-[rgba(200,232,53,0.4)] border-2 border-accent mt-1.5 shrink-0 shadow-[0_0_10px_rgba(200,232,53,0.5)]" style={{ transform: "scale(0)" }}></div>
-              <p className="text-[14px] leading-[1.6] text-foreground/90 m-0">
-                <strong className="text-foreground font-semibold">{item.title}</strong> — {item.desc}
-              </p>
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        {/* Right: Text Content (Higher Z-index) */}
+        <div className="order-2 lg:order-1">
+          <div className="section-badge">About the Academy</div>
+          <h2 className="font-heading text-[clamp(48px,6vw,88px)] leading-[1] tracking-[1px] text-navy mb-8 uppercase">
+            A Decade of <br />
+            <span className="text-orange">Champions</span>
+          </h2>
+          <p className="text-dark/70 text-[16px] leading-[1.8] max-w-[480px] mb-10">
+            Founded by Suryansh Yadav, Surya Tennis Academy has spent 10 years building a legacy in Indore. 
+            From beginner kids to competitive adults, we train players who go on to compete at state, national, and international levels.
+          </p>
+
+          <div className="flex flex-wrap gap-10">
+            <div className="flex flex-col gap-1">
+              <span className="font-heading text-5xl text-navy">100%</span>
+              <span className="text-[11px] text-muted uppercase tracking-[2px] font-bold">Focus on Quality</span>
             </div>
-          ))}
+            <div className="flex flex-col gap-1">
+              <span className="font-heading text-5xl text-navy">#01</span>
+              <span className="text-[11px] text-muted uppercase tracking-[2px] font-bold">Trusted in Indore</span>
+            </div>
+          </div>
         </div>
 
-        {/* Right: Pillars Grid */}
-        <div ref={pillarsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
-          {[
-            { icon: "🎾", title: "Tennis First", desc: "Structured coaching for all ages. Beginner to advanced, juniors to adults.", lime: true },
-            { icon: "🏓", title: "Pickleball", desc: "Surya Pickleball Academy — Indore's go-to hub for India's fastest-growing sport." },
-            { icon: "🏆", title: "Tournament Ready", desc: "Competitive track coaching to prepare players for state and national tournaments." },
-            { icon: "👨‍👩‍👧", title: "STA Family", desc: "More than an academy — a community of players, parents, and coaches." },
-          ].map((p, i) => (
-            <div
-              key={i}
-              className={`pillar-card p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(200,232,53,0.08)] ${
-                p.lime
-                  ? "bg-accent text-background"
-                  : "bg-surface border border-[rgba(200,232,53,0.15)]"
-              }`}
-              style={{ opacity: 0 }}
-            >
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center text-[20px] mb-4 ${
-                  p.lime ? "bg-background/10" : "bg-[rgba(200,232,53,0.1)]"
-                }`}
-              >
-                {p.icon}
-              </div>
-              <h4
-                className={`font-heading text-[22px] tracking-[1px] mb-2 ${
-                  p.lime ? "" : "text-foreground"
-                }`}
-              >
-                {p.title}
-              </h4>
-              <p
-                className={`text-[13px] leading-[1.6] ${
-                  p.lime ? "text-background/80" : "text-muted"
-                }`}
-              >
-                {p.desc}
-              </p>
+        {/* Left: Featured Image Card */}
+        <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+          <div className="about-image-card relative w-full max-w-[450px] aspect-[4/5] rounded-[40px] overflow-hidden shadow-[0_40px_80px_rgba(27,42,107,0.15)] bg-navy">
+            {/* Placeholder for coach image */}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent z-10"></div>
+            <div className="absolute inset-0 flex items-center justify-center text-white/10 font-heading text-9xl -rotate-12">
+              STA
             </div>
-          ))}
+            {/* Floating Info Overlay */}
+            <div className="absolute bottom-10 left-10 z-20">
+              <h4 className="font-heading text-3xl text-white mb-1 uppercase">Suryansh Yadav</h4>
+              <p className="text-sky text-[12px] font-bold tracking-[2px] uppercase">Director & Head Coach</p>
+            </div>
+            
+            {/* Navigation Arrows (Decorative like reference) */}
+            <div className="absolute bottom-10 right-10 z-20 flex gap-2">
+                <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-navy transition-colors cursor-pointer">
+                    ←
+                </div>
+                <div className="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center hover:bg-orange transition-colors cursor-pointer">
+                    →
+                </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

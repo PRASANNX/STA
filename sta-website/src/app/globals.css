@@ -1,24 +1,32 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #f4f1f0;
-  --color-background-2: #ece9e2;
-  --color-background-3: #e2dfd5;
-  --color-foreground: #1a1a1a;
-  --color-muted: #555555;
-  --color-surface: #ffffff;
-  --color-surface-2: #fcfcfc;
-  --color-accent: #c8e835;
-  --color-accent-2: #a8c41a;
-  --color-dark: #0a0f1e;
-  --color-dark-2: #0d1428;
-  --color-border-theme: rgba(0,0,0,0.1);
-  --color-green-bright: #39d353;
-  --color-orange: #ff6b35;
+  /* === STA/SPA Brand Palette === */
+  --color-navy: #1B2A6B;
+  --color-navy-deep: #0F1A45;
+  --color-sky: #5DADE2;
+  --color-sky-light: #87CEEB;
+  --color-orange: #F47920;
+  --color-lime: #C8E835;
+  --color-white: #FFFFFF;
+  --color-cream: #F8F7F4;
+  --color-dark: #1a1a1a;
+  --color-muted: #6B7280;
+  --color-muted-light: #9CA3AF;
+  --color-surface: #FFFFFF;
+  --color-border: rgba(27,42,107,0.1);
 
-  --font-heading: "Bebas Neue", sans-serif;
+  /* Semantic aliases */
+  --color-background: #F8F7F4;
+  --color-foreground: #1a1a1a;
+  --color-accent: #5DADE2;
+  --color-accent-2: #1B2A6B;
+
+  /* Typography */
+  --font-heading: "Anton", sans-serif;
   --font-body: "Plus Jakarta Sans", sans-serif;
 
+  /* Animations */
   --animate-pulse-custom: pulse 2s infinite;
   --animate-scroll-arrow: scrollArrow 1.5s ease-in-out infinite;
 
@@ -33,6 +41,11 @@
     51% { transform: scaleY(1); transform-origin: bottom; }
     100% { transform: scaleY(0); transform-origin: bottom; }
   }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 }
 
 @layer base {
@@ -45,10 +58,6 @@
   }
 }
 
-/* 
-  Custom complex components from the prototype 
-*/
-
 /* 3D WebGL Canvas View Tracker */
 .view-container {
   width: min(420px, 42vw);
@@ -60,22 +69,28 @@
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(200,232,53,0.08) 0%, transparent 70%);
-}
-.cta-bg-ball {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(200,232,53,0.06) 0%, transparent 70%);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
+  background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(93,173,226,0.06) 0%, transparent 70%);
 }
 
 /* Scroll Fade-In Initial State (Handled by GSAP) */
 .reveal-item {
   opacity: 0;
   transform: translateY(24px);
+}
+
+/* Section badge component */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(27,42,107,0.06);
+  border: 1px solid rgba(27,42,107,0.12);
+  padding: 0.375rem 1rem;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 1.5rem;
 }

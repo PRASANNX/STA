@@ -70,9 +70,9 @@ export default function TennisBall3D() {
     const fixedScale = isMobile ? 0.4 : 0.6;
     meshRef.current.scale.set(fixedScale, fixedScale, fixedScale);
 
-    // Fixed position — bottom center of viewport
-    meshRef.current.position.x = 0;
-    meshRef.current.position.y = isMobile ? -3.2 : -2.8;
+    // Fixed position — bottom right of viewport
+    meshRef.current.position.x = isMobile ? 1.5 : 3.0;
+    meshRef.current.position.y = isMobile ? -3.0 : -2.5;
     meshRef.current.position.z = 0;
 
     // Rotation: scroll-driven spin + gentle idle rotation
