@@ -16,10 +16,12 @@ import Testimonials from "@/components/Testimonials";
 import JoinCTA from "@/components/JoinCTA";
 import Footer from "@/components/Footer";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useSectionSportSync } from "@/hooks/useSectionSportSync";
 
 export default function Home() {
   const [preloaderDone, setPreloaderDone] = useState(false);
   useScrollReveal();
+  useSectionSportSync(); // M-06: ball color mapped to visible section
 
   return (
     <>

@@ -7,15 +7,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { value: 10, suffix: "+", label: "Years Legacy" },
-  { value: 500, suffix: "+", label: "Players Trained" },
-  { value: 3, suffix: "", label: "Sports Offered" },
-  { value: 7, suffix: "", label: "Days Coaching" },
+  { value: 10, suffix: "+", label: "Years Legacy", display: "10+" },
+  { value: 500, suffix: "+", label: "Players Trained", display: "500+" },
+  { value: 3, suffix: "", label: "Sports Offered", display: "3" },
+  { value: 7, suffix: "", label: "Days Coaching", display: "7" },
 ];
 
 export default function Stats() {
   const containerRef = useRef(null);
-  const [counts, setCounts] = useState(stats.map(() => 0));
+  // C-04 FIX: Initialize with final values so user never sees "0"
+  const [counts, setCounts] = useState(stats.map((s) => s.display));
   const hasAnimated = useRef(false);
 
   useEffect(() => {
@@ -29,23 +30,30 @@ export default function Stats() {
         if (hasAnimated.current) return;
         hasAnimated.current = true;
 
-        stats.forEach((stat, i) => {
-          const obj = { val: 0 };
-          gsap.to(obj, {
-            val: stat.value,
-            duration: 2,
-            ease: "expo.out",
-            delay: i * 0.1,
-            onUpdate: () => {
-              setCounts((prev) => {
-                const next = [...prev];
-                next[i] = Math.round(obj.val);
-                return next;
-              });
-            },
-          });
-        });
+        // Reset to 0 only when animation starts (user is watching)
+        setCounts(stats.map(() => "0"));
 
+        // Small delay so the "0" is barely visible before count-up
+        setTimeout(() => {
+          stats.forEach((stat, i) => {
+            const obj = { val: 0 };
+            gsap.to(obj, {
+              val: stat.value,
+              duration: 2,
+              ease: "expo.out",
+              delay: i * 0.1,
+              onUpdate: () => {
+                setCounts((prev) => {
+                  const next = [...prev];
+                  next[i] = Math.round(obj.val) + stat.suffix;
+                  return next;
+                });
+              },
+            });
+          });
+        }, 50);
+
+        // Card entrance animation
         gsap.fromTo(
           containerRef.current.querySelectorAll(".stat-item"),
           { y: 30, opacity: 0 },
@@ -67,11 +75,12 @@ export default function Stats() {
           key={i}
           className={`stat-item py-12 lg:py-16 text-center relative transition-colors hover:bg-cream/50 ${
             i < 3 ? "lg:border-r border-navy/10" : ""
-          } ${i < 2 ? "border-b lg:border-b-0 border-navy/10" : ""} ${i === 2 ? "border-b md:border-b-0 border-navy/10" : ""}`}
+          } ${i < 2 ? "border-b lg:border-b-0 border-navy/10" : ""} ${
+            i === 2 ? "border-b md:border-b-0 border-navy/10" : ""
+          }`}
         >
           <div className="font-heading text-[clamp(50px,6vw,80px)] text-navy leading-none mb-2">
             {counts[i]}
-            <span className="text-orange">{stat.suffix}</span>
           </div>
           <div className="text-[11px] text-muted tracking-[2px] uppercase font-bold">
             {stat.label}
