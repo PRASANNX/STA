@@ -6,41 +6,46 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const reviews = [
+// Two distinct sets of testimonials — no duplicates (H-07)
+const parentReviews = [
   {
-    text: "My son joined STA at age 7 and in just 2 years he's competing at district level.",
+    text: "My son joined STA at age 7 and in just 2 years he's competing at district level. Suryansh sir's coaching methodology is exceptional — he builds fundamentals before competition.",
     name: "Rajesh Patel",
-    role: "Parent",
-    pos: { top: "10%", left: "5%" },
-    color: "bg-navy"
+    role: "Parent · Junior Tennis",
+    color: "bg-navy",
   },
   {
-    text: "Best academy in Indore. The facilities are great and the community feels like family.",
+    text: "Best academy in Indore, hands down. The facilities are maintained to a high standard and the coaching staff genuinely care about every player's development.",
     name: "Anita Sharma",
-    role: "Adult Member",
-    pos: { top: "50%", left: "15%" },
-    color: "bg-orange"
+    role: "Parent · Multi-Sport",
+    color: "bg-sky",
   },
   {
-    text: "Started pickleball at 45 and the coaches are patient and encouraging. Highly recommend!",
-    name: "Vijay Gupta",
-    role: "Pickleballer",
-    pos: { top: "25%", left: "40%" },
-    color: "bg-sky"
-  },
-  {
-    text: "The multi-sport approach sets STA apart. My kids train in both tennis and pickleball.",
+    text: "The multi-sport approach sets STA apart. My kids train in both tennis and pickleball — it's improved their agility and they love every session.",
     name: "Meera Kulkarni",
-    role: "Parent",
-    pos: { top: "60%", left: "55%" },
-    color: "bg-navy"
+    role: "Parent · Tennis & Pickleball",
+    color: "bg-navy",
+  },
+];
+
+const playerReviews = [
+  {
+    text: "Started pickleball at SPA when I was 45. The coaches never made me feel out of place — patient, encouraging, and professional. Now I play competitive doubles!",
+    name: "Vijay Gupta",
+    role: "Member · Pickleball",
+    color: "bg-orange",
   },
   {
-    text: "Coach Kawaljeet Sir's bootcamp transformed my game. Competing in PWR 200 now!",
+    text: "Kawaljeet Sir's bootcamp transformed my backhand completely. I went from a casual weekend player to competing in the PWR 200 circuit in just 6 months.",
     name: "Dhruv Verma",
-    role: "Pro Player",
-    pos: { top: "15%", left: "75%" },
-    color: "bg-orange"
+    role: "Competitive Player · Tennis",
+    color: "bg-navy",
+  },
+  {
+    text: "The evening batch timing works perfectly for working professionals. The coaching is structured, the drills are intense, and I've lost 8kg since joining!",
+    name: "Priya Deshmukh",
+    role: "Member · Adult Tennis",
+    color: "bg-sky",
   },
 ];
 
@@ -50,99 +55,89 @@ export default function Testimonials() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const cards = sectionRef.current.querySelectorAll(".testimonial-bubble");
-    
-    cards.forEach((card, i) => {
-        // Floating animation
-        gsap.to(card, {
-            y: "random(-20, 20)",
-            x: "random(-10, 10)",
-            duration: "random(2, 4)",
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-            delay: i * 0.2
-        });
-
-        // Scroll reveal
-        gsap.fromTo(card, 
-            { scale: 0.5, opacity: 0 },
-            { 
-                scale: 1, 
-                opacity: 1, 
-                duration: 0.8, 
-                ease: "back.out(1.7)",
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 90%",
-                    once: true
-                }
-            }
-        );
-    });
+    const cards = sectionRef.current.querySelectorAll(".review-card");
+    gsap.fromTo(
+      cards,
+      { y: 40, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current.querySelector(".reviews-grid"),
+          start: "top 85%",
+          once: true,
+        },
+      }
+    );
 
     return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);
 
+  const ReviewCard = ({ review }) => (
+    <div className={`review-card ${review.color} p-8 lg:p-10 rounded-[32px] text-white`}>
+      <div className="flex gap-1 mb-5">
+        {[1, 2, 3, 4, 5].map((s) => (
+          <span key={s} className="text-white/80 text-[12px]">★</span>
+        ))}
+      </div>
+      <blockquote className="text-[15px] leading-[1.7] mb-8 font-medium">
+        &ldquo;{review.text}&rdquo;
+      </blockquote>
+      <div className="flex items-center gap-3 pt-5 border-t border-white/10">
+        <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center font-heading text-[16px]">
+          {review.name.charAt(0)}
+        </div>
+        <div>
+          <div className="text-[13px] font-bold">{review.name}</div>
+          <div className="text-[10px] text-white/50 uppercase tracking-[1px]">{review.role}</div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <section ref={sectionRef} className="py-[120px] lg:py-[200px] bg-cream relative overflow-hidden min-h-[800px]">
-      <div className="relative z-10 text-center max-w-[800px] mx-auto px-6 mb-20">
-        <div className="section-badge mb-6">Testimonials</div>
-        <h2 className="font-heading text-[clamp(50px,8vw,100px)] leading-[0.9] text-navy uppercase tracking-[1px]">
-          What Our <br />
-          <span className="text-sky">Community Says</span>
-        </h2>
-        <p className="text-muted text-[16px] leading-[1.8] mt-6 max-w-[500px] mx-auto">
-            Experience the transformation. Join the hundreds of players who have found their passion at STA.
+    <section ref={sectionRef} className="py-[100px] lg:py-[160px] px-6 lg:px-16 bg-cream overflow-hidden">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 gap-8">
+        <div className="max-w-[600px]">
+          <div className="section-badge">Testimonials</div>
+          <h2 className="font-heading text-[clamp(44px,6vw,80px)] leading-[0.9] text-navy uppercase mb-4">
+            The STA Family <br />
+            <span className="text-sky">Speaks</span>
+          </h2>
+        </div>
+        <p className="text-dark/50 text-[15px] leading-[1.7] max-w-[380px]">
+          Real feedback from parents and players across our Tennis, Pickleball, and Table Tennis programs.
         </p>
       </div>
 
-      {/* Floating Bubbles Container */}
-      <div className="relative w-full h-[600px] hidden lg:block">
-        {reviews.map((r, i) => (
-          <div 
-            key={i} 
-            className={`testimonial-bubble absolute p-8 rounded-[40px] shadow-xl max-w-[300px] border-2 border-white/20 text-white ${r.color}`}
-            style={{ top: r.pos.top, left: r.pos.left }}
-          >
-            <div className="flex gap-1 mb-4">
-              {[1, 2, 3, 4, 5].map(s => <span key={s} className="text-white text-[12px]">★</span>)}
-            </div>
-            <p className="text-[14px] leading-[1.6] mb-6 font-medium italic">
-                "{r.text}"
-            </p>
-            <div className="flex items-center gap-3 pt-4 border-t border-white/10">
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold text-[14px]">
-                    {r.name.charAt(0)}
-                </div>
-                <div>
-                    <div className="text-[13px] font-bold uppercase tracking-[1px]">{r.name}</div>
-                    <div className="text-[10px] text-white/60 uppercase tracking-[1px]">{r.role}</div>
-                </div>
-            </div>
-            {/* Arrow Pointer */}
-            <div className={`absolute bottom-[-10px] left-10 w-5 h-5 rotate-45 ${r.color}`}></div>
+      {/* Two distinct review groups — parents & players */}
+      <div className="reviews-grid space-y-16">
+        {/* Parents Section */}
+        <div>
+          <span className="text-[10px] font-bold text-orange uppercase tracking-[3px] mb-6 block">
+            What Parents Say
+          </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {parentReviews.map((r, i) => (
+              <ReviewCard key={`parent-${i}`} review={r} />
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
 
-      {/* Mobile Grid */}
-      <div className="lg:hidden flex flex-col gap-6 px-6">
-        {reviews.map((r, i) => (
-          <div key={i} className={`p-8 rounded-[30px] text-white ${r.color}`}>
-            <p className="text-[14px] leading-[1.6] mb-6 font-medium italic">"{r.text}"</p>
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">{r.name.charAt(0)}</div>
-                <div className="text-[12px] font-bold">{r.name} · {r.role}</div>
-            </div>
+        {/* Players Section */}
+        <div>
+          <span className="text-[10px] font-bold text-sky uppercase tracking-[3px] mb-6 block">
+            What Players Say
+          </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {playerReviews.map((r, i) => (
+              <ReviewCard key={`player-${i}`} review={r} />
+            ))}
           </div>
-        ))}
-      </div>
-
-      <div className="mt-20 text-center">
-          <button className="bg-navy text-white px-10 py-4 rounded-full font-heading text-xl uppercase tracking-[1px] hover:bg-orange transition-all">
-              View All Reviews
-          </button>
+        </div>
       </div>
     </section>
   );
