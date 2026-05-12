@@ -105,10 +105,31 @@ export default function Hero() {
            <div className="font-heading text-[20vw] text-white select-none">STA</div>
         </div>
 
-        {/* Action Image Mockup (since generation failed) */}
-        <div className="absolute inset-0 z-0">
-            {/* Visual representation of a court/player could go here */}
-            <div className="w-full h-full bg-[radial-gradient(circle_at_center,_var(--color-sky)_0%,_transparent_70%)] opacity-30"></div>
+        {/* Floating Glass Cards (Inspired by SportHead) */}
+        <div className="absolute top-10 right-10 z-30 hidden lg:block">
+            <div className="glass p-6 rounded-[30px] border-white/20 flex items-center gap-4 animate-bounce-slow">
+                <div className="flex -space-x-3">
+                    {[1,2,3].map(i => (
+                        <div key={i} className="w-10 h-10 rounded-full border-2 border-navy bg-sky flex items-center justify-center text-[10px] font-bold text-white">
+                            {i === 3 ? "500+" : ""}
+                        </div>
+                    ))}
+                </div>
+                <div>
+                    <div className="text-white font-bold text-[14px]">Join Our Community</div>
+                    <div className="text-white/60 text-[10px] uppercase tracking-[1px]">500+ Active Players</div>
+                </div>
+            </div>
+        </div>
+
+        <div className="absolute bottom-10 right-10 z-30 hidden lg:block">
+            <div className="glass-dark p-6 rounded-[30px] border-white/10 max-w-[280px]">
+                <div className="text-orange font-bold text-[10px] uppercase tracking-[2px] mb-2">Featured Selection</div>
+                <div className="text-white font-heading text-2xl uppercase mb-3">Wilson X STA Collection</div>
+                <button className="text-white text-[12px] font-bold uppercase tracking-[1px] flex items-center gap-2 group">
+                    View Programs <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </button>
+            </div>
         </div>
 
         {/* Overlay Text */}
@@ -119,7 +140,7 @@ export default function Hero() {
           </h2>
         </div>
 
-        {/* Bottom Left Info */}
+        {/* Bottom Left Info Bar (Integrated) */}
         <div ref={bottomBarRef} className="absolute bottom-8 lg:bottom-12 left-10 lg:left-20 right-10 lg:right-20 flex flex-col lg:flex-row lg:items-end justify-between gap-6 z-20">
           <p className="text-white/60 text-[13px] leading-[1.6] max-w-[300px]">
             We are dedicated to helping you achieve your fitness goals and improve your overall health and well-being.
@@ -127,7 +148,7 @@ export default function Hero() {
           
           <div className="flex items-center gap-6">
              <div className="flex flex-col items-end">
-                <span className="text-white/40 text-[10px] uppercase tracking-[1px] mb-1">Duration</span>
+                <span className="text-white/40 text-[10px] uppercase tracking-[1px] mb-1">Experience</span>
                 <span className="text-white text-[14px] font-bold">10+ Years</span>
              </div>
              <Link 

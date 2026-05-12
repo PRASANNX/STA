@@ -3,163 +3,146 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Draggable } from "gsap/Draggable";
 
-gsap.registerPlugin(ScrollTrigger, Draggable);
+gsap.registerPlugin(ScrollTrigger);
 
 const reviews = [
   {
-    text: "\"My son joined STA at age 7 and in just 2 years he's competing at district level. Suryansh sir's coaching is exceptional.\"",
-    initials: "RP",
+    text: "My son joined STA at age 7 and in just 2 years he's competing at district level.",
     name: "Rajesh Patel",
-    role: "Parent of Junior Player",
+    role: "Parent",
+    pos: { top: "10%", left: "5%" },
+    color: "bg-navy"
   },
   {
-    text: "\"Best academy in Indore. The facilities are great, the coaches are professional, and the STA community feels like family.\"",
-    initials: "AS",
+    text: "Best academy in Indore. The facilities are great and the community feels like family.",
     name: "Anita Sharma",
     role: "Adult Member",
+    pos: { top: "50%", left: "15%" },
+    color: "bg-orange"
   },
   {
-    text: "\"Started pickleball at 45 and never felt out of place. The coaches are patient and encouraging. Highly recommend!\"",
-    initials: "VG",
+    text: "Started pickleball at 45 and the coaches are patient and encouraging. Highly recommend!",
     name: "Vijay Gupta",
-    role: "Pickleball Member",
+    role: "Pickleballer",
+    pos: { top: "25%", left: "40%" },
+    color: "bg-sky"
   },
   {
-    text: "\"The multi-sport approach sets STA apart. My kids train in both tennis and pickleball, and they love every session.\"",
-    initials: "MK",
+    text: "The multi-sport approach sets STA apart. My kids train in both tennis and pickleball.",
     name: "Meera Kulkarni",
-    role: "Parent, Multi-Sport",
+    role: "Parent",
+    pos: { top: "60%", left: "55%" },
+    color: "bg-navy"
   },
   {
-    text: "\"Coach Kawaljeet Sir's bootcamp transformed my game. I went from casual player to competing in PWR 200 in just 6 months.\"",
-    initials: "DV",
+    text: "Coach Kawaljeet Sir's bootcamp transformed my game. Competing in PWR 200 now!",
     name: "Dhruv Verma",
-    role: "Competitive Player",
+    role: "Pro Player",
+    pos: { top: "15%", left: "75%" },
+    color: "bg-orange"
   },
 ];
 
 export default function Testimonials() {
   const sectionRef = useRef(null);
-  const trackRef = useRef(null);
 
   useEffect(() => {
-    if (!trackRef.current) return;
+    if (!sectionRef.current) return;
 
-    // Make the track draggable for swipe-based interaction
-    const cards = trackRef.current.querySelectorAll(".testimonial-card");
-    const cardWidth = 360;
-    const gap = 20;
-    const totalWidth = (cardWidth + gap) * cards.length - gap;
-    const viewportWidth = window.innerWidth;
-    const maxDrag = Math.max(0, totalWidth - viewportWidth + 48);
+    const cards = sectionRef.current.querySelectorAll(".testimonial-bubble");
+    
+    cards.forEach((card, i) => {
+        // Floating animation
+        gsap.to(card, {
+            y: "random(-20, 20)",
+            x: "random(-10, 10)",
+            duration: "random(2, 4)",
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            delay: i * 0.2
+        });
 
-    Draggable.create(trackRef.current, {
-      type: "x",
-      bounds: { minX: -maxDrag, maxX: 0 },
-      inertia: true,
-      edgeResistance: 0.8,
-      throwResistance: 2000,
-      cursor: "grab",
-      activeCursor: "grabbing",
-      onDrag: function () {
-        // Subtle skew based on drag velocity
-        const velocity = this.getDirection() === "left" ? -1 : 1;
-        gsap.to(cards, {
-          skewX: velocity * 1.5,
-          duration: 0.2,
-          ease: "power1.out",
-        });
-      },
-      onDragEnd: function () {
-        gsap.to(cards, {
-          skewX: 0,
-          duration: 0.5,
-          ease: "elastic.out(1, 0.5)",
-        });
-      },
+        // Scroll reveal
+        gsap.fromTo(card, 
+            { scale: 0.5, opacity: 0 },
+            { 
+                scale: 1, 
+                opacity: 1, 
+                duration: 0.8, 
+                ease: "back.out(1.7)",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 90%",
+                    once: true
+                }
+            }
+        );
     });
 
-    // Staggered reveal on scroll
-    gsap.fromTo(
-      cards,
-      { y: 40, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.12,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          once: true,
-        },
-      }
-    );
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="py-[72px] lg:py-[120px] px-6 lg:px-12 bg-background overflow-hidden"
-    >
-      <div className="reveal-item">
-        <div className="inline-flex items-center gap-2 bg-[rgba(200,232,53,0.1)] border border-[rgba(200,232,53,0.3)] px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-[2px] uppercase text-accent mb-6">
-          Reviews
-        </div>
-        <h2 className="font-heading text-[clamp(48px,6vw,72px)] leading-none tracking-[1px] mb-14 text-foreground">
-          The STA
-          <br />
-          <span className="text-accent">Family Speaks</span>
+    <section ref={sectionRef} className="py-[120px] lg:py-[200px] bg-cream relative overflow-hidden min-h-[800px]">
+      <div className="relative z-10 text-center max-w-[800px] mx-auto px-6 mb-20">
+        <div className="section-badge mb-6">Testimonials</div>
+        <h2 className="font-heading text-[clamp(50px,8vw,100px)] leading-[0.9] text-navy uppercase tracking-[1px]">
+          What Our <br />
+          <span className="text-sky">Community Says</span>
         </h2>
+        <p className="text-muted text-[16px] leading-[1.8] mt-6 max-w-[500px] mx-auto">
+            Experience the transformation. Join the hundreds of players who have found their passion at STA.
+        </p>
       </div>
 
-      <div className="overflow-visible cursor-grab select-none">
-        <div
-          ref={trackRef}
-          className="flex gap-5"
-          style={{ width: "max-content" }}
-        >
-          {reviews.map((r, i) => (
-            <div
-              key={i}
-              className="testimonial-card w-[340px] md:w-[380px] shrink-0 bg-surface border border-[rgba(200,232,53,0.15)] rounded-2xl p-7 transition-shadow hover:shadow-[0_0_30px_rgba(200,232,53,0.08)]"
-              style={{ opacity: 0 }}
-            >
-              <div className="flex gap-1 mb-4">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <span key={s} className="text-accent text-[14px]">
-                    ★
-                  </span>
-                ))}
-              </div>
-              <blockquote className="text-foreground text-[14px] leading-[1.7] mb-5 italic opacity-90">
-                {r.text}
-              </blockquote>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[rgba(200,232,53,0.15)] border border-[rgba(200,232,53,0.3)] flex items-center justify-center shrink-0 font-heading text-[16px] text-accent">
-                  {r.initials}
+      {/* Floating Bubbles Container */}
+      <div className="relative w-full h-[600px] hidden lg:block">
+        {reviews.map((r, i) => (
+          <div 
+            key={i} 
+            className={`testimonial-bubble absolute p-8 rounded-[40px] shadow-xl max-w-[300px] border-2 border-white/20 text-white ${r.color}`}
+            style={{ top: r.pos.top, left: r.pos.left }}
+          >
+            <div className="flex gap-1 mb-4">
+              {[1, 2, 3, 4, 5].map(s => <span key={s} className="text-white text-[12px]">★</span>)}
+            </div>
+            <p className="text-[14px] leading-[1.6] mb-6 font-medium italic">
+                "{r.text}"
+            </p>
+            <div className="flex items-center gap-3 pt-4 border-t border-white/10">
+                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold text-[14px]">
+                    {r.name.charAt(0)}
                 </div>
                 <div>
-                  <div className="text-[13px] font-semibold text-foreground">
-                    {r.name}
-                  </div>
-                  <div className="text-[11px] text-muted">{r.role}</div>
+                    <div className="text-[13px] font-bold uppercase tracking-[1px]">{r.name}</div>
+                    <div className="text-[10px] text-white/60 uppercase tracking-[1px]">{r.role}</div>
                 </div>
-              </div>
             </div>
-          ))}
-        </div>
+            {/* Arrow Pointer */}
+            <div className={`absolute bottom-[-10px] left-10 w-5 h-5 rotate-45 ${r.color}`}></div>
+          </div>
+        ))}
       </div>
 
-      <div className="mt-6 text-[11px] text-muted tracking-[2px] uppercase text-center lg:text-left">
-        ← Drag to explore →
+      {/* Mobile Grid */}
+      <div className="lg:hidden flex flex-col gap-6 px-6">
+        {reviews.map((r, i) => (
+          <div key={i} className={`p-8 rounded-[30px] text-white ${r.color}`}>
+            <p className="text-[14px] leading-[1.6] mb-6 font-medium italic">"{r.text}"</p>
+            <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">{r.name.charAt(0)}</div>
+                <div className="text-[12px] font-bold">{r.name} · {r.role}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-20 text-center">
+          <button className="bg-navy text-white px-10 py-4 rounded-full font-heading text-xl uppercase tracking-[1px] hover:bg-orange transition-all">
+              View All Reviews
+          </button>
       </div>
     </section>
   );
